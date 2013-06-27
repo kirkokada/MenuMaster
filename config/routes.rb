@@ -1,6 +1,6 @@
 Invitor::Application.routes.draw do
   root 'static_pages#home'
-
+  resources :users
   
   get "signup/"  => 'users#new'
   get "help/"    => 'static_pages#help'
