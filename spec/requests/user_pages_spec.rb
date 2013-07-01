@@ -51,8 +51,9 @@ describe "UserPages" do
 				before { click_button submit }
 
 				it { should have_title username }
-
-				it { should have_selector "div.alert-success" }
+				it { should have_selector "div.alert.alert-success" }
+				it { should     have_link "Sign out", href: signout_path }
+				it { should_not have_link "Sign in",  href: signin_path }
 
 			end
 

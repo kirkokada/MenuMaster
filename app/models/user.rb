@@ -13,6 +13,14 @@ class User < ActiveRecord::Base
 	before_save do
 		self.email = email.downcase
 		self.username = username.downcase 
+		create_token(:remember_token)
 	end
 
+	private
+
+		def create_token(column)
+			begin
+				self[column] = SecureRandom.urlsafe_base64
+			end while User.exists?(column => self[column])
+		end
 end
