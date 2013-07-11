@@ -5,6 +5,7 @@ describe User do
 			  	               password_confirmation: "password") } 
 	subject { user }
 
+	it { should respond_to :admin }
 	it { should respond_to :authenticate }
 	it { should respond_to :email }
 	it { should respond_to :password_digest }
@@ -12,6 +13,15 @@ describe User do
 	it { should respond_to :password_confirmation }
 	it { should respond_to :remember_token }
 	it { should respond_to :username }
+
+	describe "when admin is set to true" do
+		before do
+		  user.save!
+		  user.toggle!(:admin)
+		end
+
+		it { should be_admin }
+	end
 
 	describe "when username" do
 
