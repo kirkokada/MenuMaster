@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
 
 	has_secure_password
 
+	has_many :microposts, dependent: :destroy
+
 	before_save do
 		self.email = email.downcase
 		self.username = username.downcase 
@@ -23,6 +25,10 @@ class User < ActiveRecord::Base
 
 	def User.encrypt(token)
 		Digest::SHA1.hexdigest(token.to_s)
+	end
+
+	def feed
+		Micropost.where("user_id = ?", id)
 	end
 
 	private
