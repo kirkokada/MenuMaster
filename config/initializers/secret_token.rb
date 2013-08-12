@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Invitor::Application.config.secret_key_base = '9bb789bb022f5fb80af7d6e364e1002f90a883fd8851f0d2319cd9d20b5e3cee3331bafc95090418f6a2c030d06c4519eb69d6eba497513ee1b7a37c86572fa6'
+MenuMaster::Application.config.secret_key_base = '9bb789bb022f5fb80af7d6e364e1002f90a883fd8851f0d2319cd9d20b5e3cee3331bafc95090418f6a2c030d06c4519eb69d6eba497513ee1b7a37c86572fa6'

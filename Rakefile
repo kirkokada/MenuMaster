@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Invitor::Application.load_tasks
+MenuMaster::Application.load_tasks

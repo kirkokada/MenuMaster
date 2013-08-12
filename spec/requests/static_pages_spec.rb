@@ -11,7 +11,7 @@ describe "StaticPages" do
 
   describe "Home page" do
   	before { visit root_path }
-    let(:heading) { "Invitor" }
+    let(:heading) { "MenuMaster" }
     let(:title) { "" }
 
   	it_should_behave_like "all static pages"
@@ -23,7 +23,7 @@ describe "StaticPages" do
         page.should have_title full_title('Help')
         click_link 'About'
         page.should have_title full_title('About')
-        click_link 'Invitor'
+        click_link 'MenuMaster'
         page.should have_title full_title('')
         click_link 'Contact'
         page.should have_title full_title('Contact')

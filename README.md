@@ -1,4 +1,4 @@
-# Invitor
+# MenuMaster
 
 This is an application for simply and easily
 navigating various social networks and inviting 

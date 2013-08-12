@@ -1,4 +1,4 @@
-Invitor::Application.routes.draw do
+MenuMaster::Application.routes.draw do
   root 'static_pages#home'
   resources :users do
     member do

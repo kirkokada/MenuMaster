@@ -8,7 +8,7 @@ describe ApplicationHelper do
 		end
 
 		it "should include base title" do
-			expect(full_title('foo')).to match(/^Invitor/)
+			expect(full_title('foo')).to match(/^MenuMaster/)
 		end
 
 		it "should not include a bar (|) for the home page" do
