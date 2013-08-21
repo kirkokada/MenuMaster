@@ -158,6 +158,11 @@ aside {
 
 .stats {
   overflow: auto;
+  span {
+    float: left;
+    padding: 0 10px;
+    border: 1px solid $grayLighter;
+  }
   a {
     float: left;
     padding: 0 10px;
@@ -212,6 +217,41 @@ aside {
     &:last-child {
       border-bottom: 1px solid $grayLighter;
     }
+  }
+}
+
+/* Ingredients index */
+
+#ingredients {
+  width: 100%;
+  th, td {
+    overflow: hidden;
+    text-align: center;
+    width: 20%;
+    }
+  td {
+    overflow: auto;
+    padding: 10px 10px;
+    border-top: 1px solid $grayLighter;
+    &:last-child {
+      border-bottom: 1px solid $grayLighter;
+    }
+  }
+}
+
+#add_ingredient_link {
+  float: right;
+  padding-bottom: 10px;
+}
+
+.ingredient_stats {
+  div {
+    ul {
+      text-align: left;
+    }
+  }
+  &:hover{
+    background: $grayLighter
   }
 }
 

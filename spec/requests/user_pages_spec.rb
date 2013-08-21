@@ -185,15 +185,16 @@ describe "UserPages" do
 	end
 
 	describe "index" do
-		let(:user) { FactoryGirl.create :user }
+		let!(:user)  { FactoryGirl.create :user }
+		let!(:admin) { FactoryGirl.create :admin }
 		before(:each) do
-			sign_in user
+			sign_in admin
 			visit users_path
 		end
 
 		it { should have_title 'All users' }
 		it { should have_content 'All users' }
-		it { should_not have_link 'delete' }
+		it { should have_link 'delete' }
 
 		it "should list all users" do
 			User.all.each do |user|
@@ -215,13 +216,12 @@ describe "UserPages" do
 		end
 
 		describe "delete links as an admin" do
-			let(:admin) { FactoryGirl.create :admin }
 			before do
 			  sign_in admin
 			  visit users_path
 			end
 
-			it { should have_link 'delete', href: user_path(User.first) }
+			it { should have_link 'delete', href: user_path(user) }
 			it "should be able to delete user" do
 				expect { click_link 'delete' }.to change(User, :count).by(-1)
 			end

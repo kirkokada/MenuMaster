@@ -26,14 +26,12 @@ describe "AuthenticationPages" do
 
     end
 
-    describe "with valid information" do
+    describe "with valid information as a non-admin user" do
       
-
   		before { sign_in user }
 
-
   		it { should have_title user.username }
-      it { should have_link 'Users',       href: users_path }
+      it { should_not have_link 'Users',       href: users_path }
   		it { should have_link 'Profile',     href: user_path(user) }
       it { should have_link 'Settings',    href: edit_user_path(user) }
   		it { should have_link 'Sign out',    href: signout_path }
@@ -43,6 +41,17 @@ describe "AuthenticationPages" do
         before { click_link "Sign out" }
 
         it { should have_link 'Sign in', href: signin_path }
+      end
+
+      describe "with valid information as an admin user" do
+        before do
+          user.toggle!(:admin)
+          sign_in user
+        end
+
+        it { should have_link 'Users',       href: users_path }
+        it { should have_link 'Ingredients', href: ingredients_path }
+
       end
   	end
   end
@@ -119,14 +128,11 @@ describe "AuthenticationPages" do
       end
 
       describe "submitting to the update action" do
-        
         before { patch user_path(user) }
-
         specify { expect(response).to redirect_to(signin_path) }
       end
 
       describe "in the Microposts controller" do
-        
         describe "submitting to the create action" do
           before { post microposts_path }
           specify { expect(response).to redirect_to signin_path }
@@ -183,6 +189,33 @@ describe "AuthenticationPages" do
       describe "submitting a DELETE request to the Users#destroy action" do
         before { delete user_path(user) }
         specify { expect(response).to redirect_to(root_path) }
+      end
+
+      describe "attempting to access the Users Index page" do
+        before { get users_path }
+        specify { expect(response).to redirect_to root_path }
+      end
+
+      describe "attempting to access the New Ingredient page" do
+        before { get new_ingredient_path }
+        specify { expect(response).to redirect_to(root_path) }
+      end
+
+      describe "submitting a POST request to the Ingredients#create action" do
+        before { post ingredients_path }
+        specify { expect(response).to redirect_to root_path }
+      end
+
+      describe "attempting to access the Edit Ingredient page" do
+        let!(:ingredient) { FactoryGirl.create :ingredient }
+        before { get edit_ingredient_path(ingredient) }
+        specify { expect(response).to redirect_to root_path }
+      end
+
+      describe "submitting a PATCH request to the Ingredients#update action" do
+        let!(:ingredient) { FactoryGirl.create :ingredient }
+        before { patch ingredient_path(ingredient) }
+        specify { expect(response).to redirect_to root_path }
       end
     end
   end

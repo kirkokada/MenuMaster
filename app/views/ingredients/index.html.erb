@@ -1,0 +1,10 @@
+<% provide :title, "All ingredients" %>
+
+<div class="row">
+	<div class="span8 offset2">
+		<h1>All ingredients</h1>
+		<h2>Nutritional value per 100g</h2>
+		<%= render 'ingredients_table' %>
+		<%= will_paginate @ingredients %>
+	</div>
+</div>

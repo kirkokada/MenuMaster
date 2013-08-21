@@ -1,0 +1,22 @@
+<tr class="ingredient_stats" id="ingredient_<%= ingredient.id %>">
+	<% if current_user.admin? %>
+		<td>
+			<div class="dropdown">
+				<a href="#", id="fat-menu" class="dropdown-toggle" data-toggle="dropdown">
+					<%= ingredient.name %><b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu pull-left">
+					<li><%= link_to 'Show', ingredient %></li>
+					<li><%= link_to 'Edit', edit_ingredient_path(ingredient) %></li>
+					<li><%= link_to 'Delete', ingredient_path(ingredient), method: :delete %></li>
+				</ul>
+			</div>
+		</td>
+	<% else %>
+		<td><%= link_to ingredient.name, ingredient %></td>
+	<% end %>
+	<td><%= ingredient.calories %></td>
+	<td><%= ingredient.carbs %></td>
+	<td><%= ingredient.protein %></td>
+	<td><%= ingredient.fat %></td>
+</tr>

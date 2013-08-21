@@ -1,0 +1,11 @@
+<% provide :title, "Edit ingredient" %>
+
+<div class="row">
+	<div class="span8 offset2">
+		<h1>Edit Ingredient</h1>
+		<%= form_for @ingredient do |f| %>
+			<%= render 'ingredient_fields', f:f %>
+			<%= f.submit 'Update ingredient', class: "btn btn-primary" %>
+		<% end %>
+	</div>
+</div>

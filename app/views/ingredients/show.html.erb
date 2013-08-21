@@ -1,0 +1,34 @@
+<% provide :title, @ingredient.name %>
+
+<div class="row">
+	<div class="span6 offset3">
+		<h1><%= @ingredient.name %></h1>
+		<h2>Nutrient Information (per 100g):</h2>
+		<div class="stats">
+			<span>
+				Total Calories:
+				<strong class="stat">
+					<%= @ingredient.calories %> kcal
+				</strong>
+			</span>
+			<span>
+				Carbs:
+				<strong class="stat">
+					<%= @ingredient.carbs %>g
+				</strong>
+			</span>
+			<span>
+				Protein:
+				<strong class="stat">
+					<%= @ingredient.protein %>g
+				</strong>
+			</span>
+			<span>
+				Fat:
+				<strong class="stat">
+					<%= @ingredient.fat %>g
+				</strong>
+			</span>
+		</div>
+	</div>
+</div>

@@ -14,4 +14,12 @@ FactoryGirl.define do
 		sequence(:content) { |n| "Micropost #{n}" }
 		user
 	end
+
+	factory :ingredient do
+		sequence(:name) { |n| "Ingredient #{n}"}
+		sequence(:carbs) { |n| n * 2 }
+		sequence(:protein) { |n| n * 3 }
+		sequence(:fat) { |n| n * 4 }
+		sequence(:calories) { |n| n * 5 }
+	end
 end

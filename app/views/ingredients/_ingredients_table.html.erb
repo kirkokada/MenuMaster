@@ -1,0 +1,15 @@
+<% if current_user.admin? %>
+	<div id="add_ingredient_link">
+		<%= link_to "+ Add ingredient", new_ingredient_path %>
+	</div>
+<% end %>
+<table id="ingredients">
+	<tr>
+		<th>Name</th>
+		<th>Calories (kcal)</th>
+		<th>Carbs (g)</th>
+		<th>Protein (g)</th>
+		<th>Fat (g)</th>
+		</tr>
+	<%= render @ingredients %>
+</table>

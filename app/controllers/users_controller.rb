@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :signed_in_user, 
                 only: [:edit, :update, :index, :destroy, :following, :followers]
   before_action :correct_user, only: [:edit, :update]
-  before_action :is_admin, only: [:destroy]
+  before_action :is_admin, only: [:destroy, :index]
   before_action :already_signed_in, only: [:new, :create]
 
   def new

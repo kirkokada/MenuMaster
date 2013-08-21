@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130801023607) do
+ActiveRecord::Schema.define(version: 20130813055234) do
+
+  create_table "ingredients", force: true do |t|
+    t.string   "name"
+    t.integer  "calories"
+    t.integer  "protein"
+    t.integer  "fat"
+    t.integer  "carbs"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "ingredients", ["name"], name: "index_ingredients_on_name"
 
   create_table "microposts", force: true do |t|
     t.string   "content"
