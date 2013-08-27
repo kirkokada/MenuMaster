@@ -217,6 +217,16 @@ describe "AuthenticationPages" do
         before { patch ingredient_path(ingredient) }
         specify { expect(response).to redirect_to root_path }
       end
+
+      describe "attempting to access the Ingredient Import page" do
+        before { get new_ingredient_import_path }
+        specify { expect(response).to redirect_to root_path }
+      end
+
+      describe "submitting a POST request to the IngredientImports#create action" do
+        before { post ingredient_imports_path }
+        specify { expect(response).to redirect_to root_path }
+      end
     end
   end
 end

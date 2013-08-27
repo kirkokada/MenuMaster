@@ -2,6 +2,10 @@ class IngredientsController < ApplicationController
 	before_filter :signed_in_user
 	before_filter :is_admin, except: [:show, :index]
 
+	before_filter(:only => :index) do |controller|
+   controller.send(:is_admin) unless controller.request.format.html?
+ 	end
+
 	def new
 		@ingredient = Ingredient.new
 	end
@@ -23,6 +27,11 @@ class IngredientsController < ApplicationController
 	def index
 		@ingredients = Ingredient.order(:name).paginate(page: params[:page], 
 																										per_page: 30)
+		respond_to do |format|
+			format.html
+			format.csv { render text: Ingredient.to_csv }
+			format.xls
+		end
 	end
 
 	def edit

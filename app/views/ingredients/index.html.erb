@@ -4,7 +4,24 @@
 	<div class="span8 offset2">
 		<h1>All ingredients</h1>
 		<h2>Nutritional value per 100g</h2>
+		<% if current_user.admin? %>
+			<div id="add_ingredient_link">
+				<%= link_to "+ Add ingredient", new_ingredient_path %>
+			</div>
+		<% end %>
 		<%= render 'ingredients_table' %>
 		<%= will_paginate @ingredients %>
+		<% if current_user.admin? %>
+			<div class="btn-group">
+				<a href="#" class="btn btn-mini dropdown dropdown-toggle" data-toggle="dropdown">
+					Export<span class="caret"></span>
+				</a>
+					<ul class="dropdown-menu">
+						<li><%= link_to "CSV", ingredients_path(format: "csv") %> </li>
+						<li><%= link_to "XLS", ingredients_path(format: "xls") %></li>
+					</ul>
+				<%= link_to "Import", new_ingredient_import_path, class: "btn btn-mini" %>
+			</div>
+		<% end %>
 	</div>
 </div>

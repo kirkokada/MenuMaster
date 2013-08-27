@@ -1,0 +1,31 @@
+<% provide :title, "Ingredient Import" %>
+
+<div class="row">
+  <div class="span8 offset2">
+    <h1>Ingredient Import</h1>
+
+    <p>A CSV or Excel file can be used to import records. The first row should be the column name. The following columns are allowed.</p>
+
+    <ul>
+      <% Ingredient.columns.each do |column| %>
+        <% if column.name.in? ["id", *Ingredient.accessible_attributes] %>
+          <li>
+            <strong><%= column.name %></strong> -
+            <%= column.type.to_s.titleize %> type
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+
+    <p>If an <strong>id</strong> is supplied it will update the matching record instead of creating a new one.</p>
+
+    <%= form_for @ingredient_import do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+
+      <%= f.label :file, "File" %>
+      <%= f.file_field :file %>
+      
+      <%= f.submit "Import", class: "btn" %>
+    <% end %>
+  </div>
+</div>
