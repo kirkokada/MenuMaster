@@ -50,7 +50,7 @@ describe "AuthenticationPages" do
         end
 
         it { should have_link 'Users',       href: users_path }
-        it { should have_link 'Ingredients', href: ingredients_path }
+        it { should have_link 'Foods', href: foods_path }
 
       end
   	end
@@ -196,35 +196,35 @@ describe "AuthenticationPages" do
         specify { expect(response).to redirect_to root_path }
       end
 
-      describe "attempting to access the New Ingredient page" do
-        before { get new_ingredient_path }
+      describe "attempting to access the New Food page" do
+        before { get new_food_path }
         specify { expect(response).to redirect_to(root_path) }
       end
 
-      describe "submitting a POST request to the Ingredients#create action" do
-        before { post ingredients_path }
+      describe "submitting a POST request to the Foods#create action" do
+        before { post foods_path }
         specify { expect(response).to redirect_to root_path }
       end
 
-      describe "attempting to access the Edit Ingredient page" do
-        let!(:ingredient) { FactoryGirl.create :ingredient }
-        before { get edit_ingredient_path(ingredient) }
+      describe "attempting to access the Edit Food page" do
+        let!(:food) { FactoryGirl.create :food }
+        before { get edit_food_path(food) }
         specify { expect(response).to redirect_to root_path }
       end
 
-      describe "submitting a PATCH request to the Ingredients#update action" do
-        let!(:ingredient) { FactoryGirl.create :ingredient }
-        before { patch ingredient_path(ingredient) }
+      describe "submitting a PATCH request to the Foods#update action" do
+        let!(:food) { FactoryGirl.create :food }
+        before { patch food_path(food) }
         specify { expect(response).to redirect_to root_path }
       end
 
-      describe "attempting to access the Ingredient Import page" do
-        before { get new_ingredient_import_path }
+      describe "attempting to access the Food Import page" do
+        before { get new_food_import_path }
         specify { expect(response).to redirect_to root_path }
       end
 
-      describe "submitting a POST request to the IngredientImports#create action" do
-        before { post ingredient_imports_path }
+      describe "submitting a POST request to the FoodImports#create action" do
+        before { post food_imports_path }
         specify { expect(response).to redirect_to root_path }
       end
     end

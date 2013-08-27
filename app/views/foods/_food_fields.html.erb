@@ -1,0 +1,18 @@
+<%= render 'shared/error_messages', object: f.object %>
+
+<table id="foods">
+	<tr>
+		<th><%= f.label :name, "Name" %></td>
+		<th><%= f.label :calories, "Calories (kcal)" %></td>
+		<th><%= f.label :carbs, "Carbs (g)" %></td>
+		<th><%= f.label :protein, "Protein (g)" %></td>
+		<th><%= f.label :fat, "Fat (g)" %></td>
+	</tr>
+	<tr>
+	  <td><%= f.text_field :name %></td>
+	  <td><%= f.text_field :calories %></td>
+	  <td><%= f.text_field :carbs %></td>
+	  <td><%= f.text_field :protein %></td>
+	  <td><%= f.text_field :fat %></td>
+	</tr>
+</table>

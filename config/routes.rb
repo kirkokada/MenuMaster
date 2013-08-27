@@ -8,8 +8,8 @@ MenuMaster::Application.routes.draw do
   resources :sessions,      only: [:new, :create, :destroy]
   resources :microposts,    only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
-  resources :ingredients
-  resources :ingredient_imports, only: [:new, :create]
+  resources :foods
+  resources :food_imports, only: [:new, :create]
   
   get "signup/"  => 'users#new'
   get "signin/"  => 'sessions#new'

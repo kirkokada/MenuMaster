@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">ID</Data></Cell>
+        <Cell><Data ss:Type="String">Name</Data></Cell>
+        <Cell><Data ss:Type="String">Calories</Data></Cell>
+        <Cell><Data ss:Type="String">Carbs</Data></Cell>
+        <Cell><Data ss:Type="String">Protein</Data></Cell>
+        <Cell><Data ss:Type="String">Fat</Data></Cell>
+      </Row>
+    <% @foods.each do |food| %>
+      <Row>
+        <Cell><Data ss:Type="Number"><%= food.id %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= food.name %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= food.calories %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= food.carbs %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= food.protein %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= food.fat %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>
+

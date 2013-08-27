@@ -1,0 +1,27 @@
+<% provide :title, "All foods" %>
+
+<div class="row">
+	<div class="span8 offset2">
+		<h1>All foods</h1>
+		<h2>Nutritional value per 100g</h2>
+		<% if current_user.admin? %>
+			<div id="add_food_link">
+				<%= link_to "+ Add food", new_food_path %>
+			</div>
+		<% end %>
+		<%= render 'foods_table' %>
+		<%= will_paginate @foods %>
+		<% if current_user.admin? %>
+			<div class="btn-group">
+				<a href="#" class="btn btn-mini dropdown dropdown-toggle" data-toggle="dropdown">
+					Export<span class="caret"></span>
+				</a>
+					<ul class="dropdown-menu">
+						<li><%= link_to "CSV", foods_path(format: "csv") %> </li>
+						<li><%= link_to "XLS", foods_path(format: "xls") %></li>
+					</ul>
+				<%= link_to "Import", new_food_import_path, class: "btn btn-mini" %>
+			</div>
+		<% end %>
+	</div>
+</div>

@@ -1,0 +1,11 @@
+<% provide :title, "Create food" %>
+
+<div class="row">
+	<div class="span6 offset3">
+		<h1>Create food</h1>
+		<%= form_for @food do |f| %>
+		  <%= render 'food_fields', f:f %>
+		  <%= f.submit "Create food", class: "btn btn-primary" %>
+		<% end %>
+	</div>
+</div>
