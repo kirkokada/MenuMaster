@@ -48,6 +48,12 @@ describe "StaticPages" do
         end
       end
 
+      describe "links" do
+        
+        it { should have_link "Recipes", href: recipes_path }
+
+      end
+
       describe "follower/following counts" do
         let(:other_user) { FactoryGirl.create(:user) }
         before do

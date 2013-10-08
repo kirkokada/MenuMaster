@@ -81,12 +81,20 @@ describe "AuthenticationPages" do
     end
 
     describe "for non-signed in users" do
-        
+
+      share_examples_for "visiting a protected page" do
+        it { should have_title 'Sign in' }
+      end
+
+      share_examples_for "submitting to a protected action" do
+        specify { expect(response).to redirect_to signin_path }
+      end
+
       describe "visiting a protected page" do
         
         before { visit edit_user_path(user) }
 
-        it { should have_title 'Sign in' }
+        it_should_behave_like "visiting a protected page"
 
         describe "after signing in" do
           before do
@@ -114,33 +122,48 @@ describe "AuthenticationPages" do
 
       describe "visiting the following page" do
         before { visit following_user_path(user) }
-        it { should have_title('Sign in') }
+        it_should_behave_like "visiting a protected page"
       end
 
       describe "visiting the followers page" do
         before { visit followers_user_path(user) }
-        it { should have_title('Sign in') }
+        it_should_behave_like "visiting a protected page"
       end
 
       describe "visiting the Users#index page" do
         before { visit users_path }
-        it { should have_title 'Sign in' }
+        it_should_behave_like "visiting a protected page"
       end
 
-      describe "submitting to the update action" do
-        before { patch user_path(user) }
-        specify { expect(response).to redirect_to(signin_path) }
+      describe "visiting the Recipes#new page" do
+        before { visit new_recipe_path }
+        it_should_behave_like "visiting a protected page"
+      end
+
+      describe "visiting the Ingredients#new page" do
+        let(:recipe) { FactoryGirl.create :recipe, user: user }
+        before { visit new_recipe_ingredient_path(recipe) }
+        it_should_behave_like "visiting a protected page"
+      end
+
+      describe "in the Users controller" do
+
+        describe "submitting to the update action" do
+          before { patch user_path(user) }
+          it_should_behave_like "submitting to a protected action"
+        end
       end
 
       describe "in the Microposts controller" do
+
         describe "submitting to the create action" do
           before { post microposts_path }
-          specify { expect(response).to redirect_to signin_path }
+          it_should_behave_like "submitting to a protected action"
         end
 
         describe "submitting to the destroy action" do
           before { delete micropost_path(FactoryGirl.create(:micropost)) }
-          specify { expect(response).to redirect_to signin_path }
+          it_should_behave_like "submitting to a protected action"
         end
       end
 
@@ -148,12 +171,20 @@ describe "AuthenticationPages" do
         
         describe "submitting to the create action" do
           before { post relationships_path }
-          specify { expect(response).to redirect_to signin_path }
+          it_should_behave_like "submitting to a protected action"
         end
 
         describe "submitting to the destroy action" do
           before { delete relationship_path(1) }
-          specify { expect(response).to redirect_to signin_path}
+          it_should_behave_like "submitting to a protected action"
+        end
+      end
+
+      describe "in the Recipes controller" do
+        
+        describe "submitting to the create action" do
+          before { post recipes_path }
+          it_should_behave_like "submitting to a protected action"
         end
       end
     end
@@ -177,6 +208,17 @@ describe "AuthenticationPages" do
           patch user_path(wrong_user)
         end
         specify { expect(response).to redirect_to(root_path) }
+      end
+
+      describe "visiting Ingredients#new page" do
+        let!(:recipe) { FactoryGirl.create :recipe, user: wrong_user }
+        before do
+          sign_in user
+          visit new_recipe_ingredient_path(recipe)
+        end
+        
+        it { should_not have_title full_title("Add ingredient") }
+        it { should_not have_title full_title("Sign in") }
       end
     end
 
@@ -229,4 +271,6 @@ describe "AuthenticationPages" do
       end
     end
   end
+
+  
 end

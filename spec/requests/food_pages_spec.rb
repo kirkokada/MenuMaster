@@ -86,7 +86,7 @@ describe "FoodPages" do
 
 			it "should list all foods" do
 				Food.all.each do |food|
-					expect(page).to have_selector "tr#food_#{food.id}"
+					expect(page).to have_selector "div#food_#{food.id}"
 				end
 			end
 

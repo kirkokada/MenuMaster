@@ -1,22 +1,18 @@
-<tr class="ingredient_stats" id="ingredient_<%= ingredient.id %>">
-	<% if current_user.admin? %>
-		<td>
-			<div class="dropdown">
-				<a href="#", id="fat-menu" class="dropdown-toggle" data-toggle="dropdown">
-					<%= ingredient.name %><b class="caret"></b>
-				</a>
-				<ul class="dropdown-menu pull-left">
-					<li><%= link_to 'Show', ingredient %></li>
-					<li><%= link_to 'Edit', edit_ingredient_path(ingredient) %></li>
-					<li><%= link_to 'Delete', ingredient_path(ingredient), method: :delete %></li>
-				</ul>
-			</div>
-		</td>
+<div class="table_row" id="ingredient_<%= ingredient.id %>">
+	<span><%= ingredient.name %></span>
+	<span><%= number_with_precision ingredient.calories, precision: 2 %></span>
+	<span><%= number_with_precision ingredient.carbs, precision: 2 %></span>
+	<span><%= number_with_precision ingredient.protein, precision: 2 %></span>
+	<span><%= number_with_precision ingredient.fat, precision: 2 %></span>
+	<% if recipe.user == current_user %>
+		<span><%= link_to ingredient.amount, edit_recipe_ingredient_path(recipe, ingredient), remote: true %></span>
+		<span>
+			<%= link_to 'X', recipe_ingredient_path(recipe, ingredient), 
+		                       method: :delete,
+		                       class: "btn-small btn-danger",
+		                       remote: true %>
+		</span>
 	<% else %>
-		<td><%= link_to ingredient.name, ingredient %></td>
+		<span><%= number_with_precision ingredient.amount %></span>
 	<% end %>
-	<td><%= ingredient.calories %></td>
-	<td><%= ingredient.carbs %></td>
-	<td><%= ingredient.protein %></td>
-	<td><%= ingredient.fat %></td>
-</tr>
+</div>

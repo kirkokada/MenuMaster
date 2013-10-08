@@ -1,0 +1,13 @@
+<section>
+	<h1><%= recipe.name %>
+	<% if current_user == recipe.user %>
+		[ <%= link_to "edit", edit_recipe_path(recipe), remote: true %> ]
+	<% end %>
+	</h1>
+	<i>
+		by <%= link_to recipe.user.username, recipe.user %>
+	</i>
+</section>
+<section>
+	<i><%= recipe.description %></i>
+</section>

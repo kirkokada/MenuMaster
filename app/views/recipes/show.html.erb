@@ -1,0 +1,22 @@
+<% provide :title, @title %>
+
+<div class="row">
+	<aside class="span4" id="recipe_info">
+		<%= render 'recipe_sidebar', recipe: @recipe %>
+	</aside>
+	<div class="span8" id="ingredients">
+		<h3>
+			Ingredients
+		</h3>
+		<% if current_user == @recipe.user %>
+			<%= link_to "+ Add ingredients", new_recipe_ingredient_path(@recipe), class: "pull-right" %>
+		<% end %>
+		<% if @ingredients.any? %>
+			<%= will_paginate @ingredients %>
+			<div class="table">
+				<%= render 'shared/table_headers', show_amount: true %>
+				<%= render @ingredients, recipe: @recipe %>
+			</div>
+		<% end %>
+	</div>
+</div>	

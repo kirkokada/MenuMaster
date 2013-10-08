@@ -123,7 +123,7 @@ input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
   width: 100%;
   padding: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   @include box_sizing;
 }
 
@@ -220,31 +220,42 @@ aside {
   }
 }
 
-/* Ingredients index */
+/* Ingredients & Food index */
 
-#ingredients {
+.table {
+  display: table;
   width: 100%;
-  th, td {
+  .table_header {
+    font-weight: bold;
+  }
+  .table_row {
+    display: table-row;
     overflow: hidden;
     text-align: center;
-    width: 20%;
+    span {
+      display: table-cell;
+      padding: 5px 5px;
+      border-top: 1px solid $grayLighter;
+      .hidden {
+        display: none;
+      }
     }
-  td {
-    overflow: auto;
-    padding: 10px 10px;
-    border-top: 1px solid $grayLighter;
     &:last-child {
       border-bottom: 1px solid $grayLighter;
+    }
+    .amount-input {
+      width: 50px;
+      margin-top: 5px;
     }
   }
 }
 
-#add_ingredient_link {
+#add_food_link {
   float: right;
   padding-bottom: 10px;
 }
 
-.ingredient_stats {
+.food_stats {
   div {
     ul {
       text-align: left;
@@ -253,6 +264,15 @@ aside {
   &:hover{
     background: $grayLighter
   }
+}
+
+.ingredient_submit {
+  margin: 0;
+}
+
+.remove_ingredient {
+  color: $grayLight;
+  font-style: italic;
 }
 
 /* microposts */
@@ -286,3 +306,4 @@ aside {
     margin-bottom: 5px;
   }
 }
+

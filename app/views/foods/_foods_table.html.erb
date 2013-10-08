@@ -1,10 +1,4 @@
-<table id="foods">
-	<tr>
-		<th>Name</th>
-		<th>Calories (kcal)</th>
-		<th>Carbs (g)</th>
-		<th>Protein (g)</th>
-		<th>Fat (g)</th>
-		</tr>
+<div id="foods" class="table">
+	<%= render 'shared/table_headers', show_amount: false %>
 	<%= render @foods %>
-</table>
+</div>

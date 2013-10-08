@@ -1,0 +1,2 @@
+$('#ingredient_<%= @ingredient.id %>').replaceWith(
+	"<%= escape_javascript(render('edit_ingredient_form', recipe: @recipe, ingredient: @ingredient)) %>");

@@ -1,20 +1,28 @@
 class Ingredient < ActiveRecord::Base
-	validates :name,     presence: true, uniqueness: { case_sensitive: false }
-	validates :calories, presence: true
-	validates :fat,      presence: true
-	validates :carbs,    presence: true
-	validates :protein,  presence: true
+	belongs_to :recipe
+	belongs_to :food
 
-	def self.to_csv(options={}) 
-		CSV.generate(options) do |csv|
-			csv << column_names
-			all.each do |ingredient|
-				csv << ingredient.attributes.values_at(*column_names)
-			end
-		end
+	before_create :set_nutritional_data
+
+	before_update :set_nutritional_data
+
+	validates :food_id, presence: true
+	validates :amount, presence: true
+
+	def name
+		food.name
 	end
 
-	def self.accessible_attributes
-		["name", "calories", "fat", "carbs", "protein"]
+	def proportion
+		self.amount / 100.0 || 0
+	end
+
+	private
+
+	def set_nutritional_data
+		self.calories = food.calories * proportion
+		self.carbs    = food.carbs    * proportion
+		self.protein  = food.protein  * proportion
+		self.fat      = food.fat      * proportion
 	end
 end

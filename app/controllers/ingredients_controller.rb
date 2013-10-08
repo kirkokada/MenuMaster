@@ -1,62 +1,71 @@
 class IngredientsController < ApplicationController
 	before_filter :signed_in_user
-	before_filter :is_admin, except: [:show, :index]
-
-	before_filter(:only => :index) do |controller|
-   controller.send(:is_admin) unless controller.request.format.html?
- 	end
+	before_filter :current_user_recipe
 
 	def new
-		@ingredient = Ingredient.new
+		@foods = Food.paginate(page: params[:page])
 	end
 
 	def create
-		@ingredient = Ingredient.new(ingredient_params)
+		@ingredient = @recipe.ingredients.build(ingredient_params)
 		if @ingredient.save
-			flash[:success] = "Ingredient created."
-			redirect_to ingredients_path
+			respond_to do |format|
+				format.html do
+					@foods = Food.paginate(page: params[:page])
+					render :new
+				end
+				format.js
+			end
 		else
-			render 'new'
-		end
-	end
-
-	def show
-		@ingredient = Ingredient.find(params[:id])
-	end
-
-	def index
-		@ingredients = Ingredient.order(:name).paginate(page: params[:page], 
-																										per_page: 30)
-		respond_to do |format|
-			format.html
-			format.csv { render text: Ingredient.to_csv }
-			format.xls
-		end
-	end
-
-	def edit
-		@ingredient = Ingredient.find(params[:id])
-	end
-
-	def update
-		@ingredient = Ingredient.find(params[:id])
-		if @ingredient.update_attributes(ingredient_params)
-			flash[:success] = "Ingredient updated."
-			redirect_to ingredients_path
-		else
-			render 'edit'
+			respond_to do |format|
+				format.html
+				format.js { render action: 'add_ingredient' }
+			end
 		end
 	end
 
 	def destroy
-		Ingredient.find(params[:id]).destroy
-		flash[:succes] = "Ingredient deleted."
-		redirect_to ingredients_path
+		@ingredient = @recipe.ingredients.find(params[:id])
+		@food = @ingredient.food
+		@ingredient.destroy
+		respond_to do |format|
+			format.html { redirect_to @recipe }
+			format.js
+		end
+	end
+
+	def edit
+		@ingredient = @recipe.ingredients.find(params[:id])
+		respond_to do |format|
+			format.html
+			format.js 
+		end
+	end
+
+	def update
+		@ingredient = @recipe.ingredients.find(params[:id])
+		if @ingredient.update_attributes(ingredient_params)
+			respond_to do |format|
+				format.html
+				format.js
+			end
+		else
+			respond_to do |format|
+				format.html
+				format.js { render :edit, id: @ingredient.id, recipe_id: @recipe.id, format: :js }
+			end
+		end
 	end
 
 	private
 
+		def current_user_recipe
+			unless @recipe = current_user.recipes.find_by_id(params[:recipe_id])
+				redirect_to root_path
+			end
+		end
+
 		def ingredient_params
-			params.require(:ingredient).permit(:name, :carbs, :fat, :protein, :calories)
+			params.require(:ingredient).permit(:food_id, :amount)
 		end
 end

@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Relationship do
+	before(:all) { User.delete_all }
+	
 	let(:follower) { FactoryGirl.create :user }
 	let(:followed) { FactoryGirl.create :user }
 	let(:relationship) { follower.relationships.build(followed_id: followed.id) }

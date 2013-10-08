@@ -1,0 +1,16 @@
+<% provide :title, "My recipes" %>
+
+<div class="row">
+	<div class="span8 offset2">
+		<h1>My Recipes</h1>
+		<%= link_to "+ New recipe", new_recipe_path, class: "pull-right" %>
+		<% if @recipes.any? %>
+			<div class="table">
+				<%= render 'shared/table_headers', show_amount: false %>
+				<%= render @recipes %>
+			</div>
+		<% end %>
+
+		<%= will_paginate %>
+	</div>
+</div>

@@ -18,6 +18,7 @@ describe User do
 	it { should respond_to :password_confirmation }
 	it { should respond_to :remember_token }
 	it { should respond_to :username }
+	it { should respond_to :recipes }
 	it { should respond_to :relationships }
 	it { should respond_to :reverse_relationships }
 

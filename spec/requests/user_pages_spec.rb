@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "UserPages" do
-
+	before(:all) { User.delete_all }
 	subject { page }
 
 	describe "signup" do

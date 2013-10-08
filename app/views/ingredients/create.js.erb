@@ -1,0 +1,5 @@
+$("#food_<%= @ingredient.food_id %>").replaceWith(
+	"<%= escape_javascript(
+		render('added_ingredient', recipe: @recipe, 
+			                               ingredient: @ingredient, 
+			                               food: @ingredient.food)) %>")

@@ -10,13 +10,21 @@ MenuMaster::Application.routes.draw do
   resources :relationships, only: [:create, :destroy]
   resources :foods
   resources :food_imports, only: [:new, :create]
+  resources :recipes do
+    resources :ingredients
+  end
   
   get "signup/"  => 'users#new'
+
+  scope controller: :static_pages do
+    get "help/"    => :help
+    get "about/"   => :about
+    get "contact/" => :contact
+  end
+
   get "signin/"  => 'sessions#new'
   delete "signout/" => 'sessions#destroy'
-  get "help/"    => 'static_pages#help'
-  get "about/"   => 'static_pages#about'
-  get "contact/" => 'static_pages#contact'
+  
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

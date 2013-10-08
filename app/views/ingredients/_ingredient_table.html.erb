@@ -1,0 +1,10 @@
+<div id="ingredients" class="table">
+	<%= render 'shared/table_headers', show_amount: true %>
+	<% foods.each do |food| %>
+		<% if ingredient = recipe.ingredients.find_by_food_id(food.id) %>
+			<%= render 'added_ingredient', recipe: recipe, food: food, ingredient: ingredient %>
+		<% else %>
+			<%= render 'add_ingredient_form', recipe: recipe, food: food %>
+		<% end %>
+	<% end %>
+</div>

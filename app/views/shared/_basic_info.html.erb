@@ -1,0 +1,12 @@
+<% if object.class == Recipe %>
+	<span><%= link_to object.name, object %></span>
+<% else %>
+	<span><%= object.name %></span>
+<% end %>
+<span><%= number_with_precision object.calories, precision: 2 %></span>
+<span><%= number_with_precision object.carbs, precision: 2 %></span>
+<span><%= number_with_precision object.protein, precision: 2 %></span>
+<span><%= number_with_precision object.fat, precision: 2 %></span>
+<% if object.class == Ingredient && params[:action] != 'edit' %>
+	<span><%= number_with_precision object.amount, precision: 2 %></span>
+<% end %>

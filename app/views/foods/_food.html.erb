@@ -1,6 +1,6 @@
-<tr class="food_stats" id="food_<%= food.id %>">
+<div class="food_stats table_row" id="food_<%= food.id %>">
 	<% if current_user.admin? %>
-		<td>
+		<span>
 			<div class="dropdown">
 				<a href="#", id="fat-menu" class="dropdown-toggle" data-toggle="dropdown">
 					<%= food.name %><b class="caret"></b>
@@ -11,12 +11,12 @@
 					<li><%= link_to 'Delete', food_path(food), method: :delete %></li>
 				</ul>
 			</div>
-		</td>
+		</span>
 	<% else %>
-		<td><%= link_to food.name, food %></td>
+		<span><%= link_to food.name, food %></span>
 	<% end %>
-	<td><%= food.calories %></td>
-	<td><%= food.carbs %></td>
-	<td><%= food.protein %></td>
-	<td><%= food.fat %></td>
-</tr>
+	<span><%= food.calories %></span>
+	<span><%= food.carbs %></span>
+	<span><%= food.protein %></span>
+	<span><%= food.fat %></span>
+</div>

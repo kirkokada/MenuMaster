@@ -1,11 +1,11 @@
-<% provide :title, "Create ingredient" %>
+<% provide :title, "Add ingredients" %>
 
 <div class="row">
-	<div class="span6 offset3">
-		<h1>Create ingredient</h1>
-		<%= form_for @ingredient do |f| %>
-		  <%= render 'ingredient_fields', f:f %>
-		  <%= f.submit "Create ingredient", class: "btn btn-primary" %>
-		<% end %>
+	<div class="span8 offset2">
+		<h1>Add Ingredients</h1>
+		<h2>Nutritional values per 100g</h2>
+		<%= link_to "<< Return to \"#{@recipe.name}\"", @recipe  %>
+		<%= will_paginate @foods %>
+		<%= render 'ingredient_table', foods: @foods, recipe: @recipe %>
 	</div>
 </div>

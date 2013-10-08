@@ -1,18 +1,18 @@
 <%= render 'shared/error_messages', object: f.object %>
 
-<table id="foods">
-	<tr>
-		<th><%= f.label :name, "Name" %></td>
-		<th><%= f.label :calories, "Calories (kcal)" %></td>
-		<th><%= f.label :carbs, "Carbs (g)" %></td>
-		<th><%= f.label :protein, "Protein (g)" %></td>
-		<th><%= f.label :fat, "Fat (g)" %></td>
-	</tr>
-	<tr>
-	  <td><%= f.text_field :name %></td>
-	  <td><%= f.text_field :calories %></td>
-	  <td><%= f.text_field :carbs %></td>
-	  <td><%= f.text_field :protein %></td>
-	  <td><%= f.text_field :fat %></td>
-	</tr>
-</table>
+<div id="foods" class="table">
+	<div class="table_row">
+		<span><%= f.label :name, "Name" %></span>
+		<span><%= f.label :calories, "Calories (kcal)" %></span>
+		<span><%= f.label :carbs, "Carbs (g)" %></span>
+		<span><%= f.label :protein, "Protein (g)" %></span>
+		<span><%= f.label :fat, "Fat (g)" %></span>
+	</div>
+	<div class="table_row">
+	  <span><%= f.text_field :name %></span>
+	  <span><%= f.text_field :calories %></span>
+	  <span><%= f.text_field :carbs %></span>
+	  <span><%= f.text_field :protein %></span>
+	  <span><%= f.text_field :fat %></span>
+	</div>
+</div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130827061036) do
+ActiveRecord::Schema.define(version: 20131003061746) do
 
   create_table "foods", force: true do |t|
     t.string   "name"
@@ -25,6 +25,22 @@ ActiveRecord::Schema.define(version: 20130827061036) do
 
   add_index "foods", ["name"], name: "index_foods_on_name"
 
+  create_table "ingredients", force: true do |t|
+    t.integer  "food_id"
+    t.integer  "recipe_id"
+    t.integer  "amount"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.float    "calories"
+    t.float    "protein"
+    t.float    "carbs"
+    t.float    "fat"
+  end
+
+  add_index "ingredients", ["food_id", "recipe_id"], name: "index_ingredients_on_food_id_and_recipe_id", unique: true
+  add_index "ingredients", ["food_id"], name: "index_ingredients_on_food_id"
+  add_index "ingredients", ["recipe_id"], name: "index_ingredients_on_recipe_id"
+
   create_table "microposts", force: true do |t|
     t.string   "content"
     t.integer  "user_id"
@@ -33,6 +49,17 @@ ActiveRecord::Schema.define(version: 20130827061036) do
   end
 
   add_index "microposts", ["user_id", "created_at"], name: "index_microposts_on_user_id_and_created_at"
+
+  create_table "recipes", force: true do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "recipes", ["name"], name: "index_recipes_on_name"
+  add_index "recipes", ["user_id"], name: "index_recipes_on_user_id"
 
   create_table "relationships", force: true do |t|
     t.integer  "follower_id"
