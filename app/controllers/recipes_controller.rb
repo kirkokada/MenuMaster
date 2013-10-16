@@ -1,6 +1,6 @@
 class RecipesController < ApplicationController
 	before_action :signed_in_user, except: :show
-	before_action :current_user_recipe, only: [:edit, :update, :destroy]
+	before_action :correct_recipe, only: [:edit, :update, :destroy]
 
 	def new
 		@recipe = current_user.recipes.build
@@ -61,7 +61,7 @@ class RecipesController < ApplicationController
 			params.require(:recipe).permit(:name, :description)
 		end
 
-		def current_user_recipe
+		def correct_recipe
 			@recipe = current_user.recipes.find_by(id: params[:id])
 			redirect_to root_path if @recipe.nil? 
 		end

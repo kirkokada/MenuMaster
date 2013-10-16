@@ -82,11 +82,11 @@ describe "AuthenticationPages" do
 
     describe "for non-signed in users" do
 
-      share_examples_for "visiting a protected page" do
+      shared_examples_for "visiting a protected page" do
         it { should have_title 'Sign in' }
       end
 
-      share_examples_for "submitting to a protected action" do
+      shared_examples_for "submitting to a protected action" do
         specify { expect(response).to redirect_to signin_path }
       end
 
@@ -162,15 +162,15 @@ describe "AuthenticationPages" do
         end
 
         describe "submitting to the destroy action" do
-          before { delete micropost_path(FactoryGirl.create(:micropost)) }
+          before { delete micropost_path(1) }
           it_should_behave_like "submitting to a protected action"
         end
       end
 
       describe "in the Relationships controller" do
-        
+
         describe "submitting to the create action" do
-          before { post relationships_path }
+          before { post relationships_path }  
           it_should_behave_like "submitting to a protected action"
         end
 
@@ -181,9 +181,18 @@ describe "AuthenticationPages" do
       end
 
       describe "in the Recipes controller" do
-        
         describe "submitting to the create action" do
           before { post recipes_path }
+          it_should_behave_like "submitting to a protected action"
+        end
+
+        describe "submitting to the update action" do
+          before { put recipe_path(1) }
+          it_should_behave_like "submitting to a protected action"
+        end
+
+        describe "submitting to the delete action" do
+          before { delete recipe_path(1) }
           it_should_behave_like "submitting to a protected action"
         end
       end
@@ -191,6 +200,10 @@ describe "AuthenticationPages" do
 
     describe "for wrong user" do
       let(:wrong_user) { FactoryGirl.create :user }
+
+      shared_examples_for "submitting to a protected action as wrong user" do
+        specify { expect(response).to redirect_to root_path }
+      end
 
       describe "visiting Users#edit page" do
         before do
@@ -207,7 +220,7 @@ describe "AuthenticationPages" do
           sign_in user, no_capybara: true 
           patch user_path(wrong_user)
         end
-        specify { expect(response).to redirect_to(root_path) }
+        it_should_behave_like "submitting to a protected action as wrong user"
       end
 
       describe "visiting Ingredients#new page" do
@@ -230,44 +243,44 @@ describe "AuthenticationPages" do
 
       describe "submitting a DELETE request to the Users#destroy action" do
         before { delete user_path(user) }
-        specify { expect(response).to redirect_to(root_path) }
+        it_should_behave_like "submitting to a protected action as wrong user"
       end
 
       describe "attempting to access the Users Index page" do
         before { get users_path }
-        specify { expect(response).to redirect_to root_path }
+        it_should_behave_like "submitting to a protected action as wrong user"
       end
 
       describe "attempting to access the New Food page" do
         before { get new_food_path }
-        specify { expect(response).to redirect_to(root_path) }
+        it_should_behave_like "submitting to a protected action as wrong user"
       end
 
       describe "submitting a POST request to the Foods#create action" do
         before { post foods_path }
-        specify { expect(response).to redirect_to root_path }
+        it_should_behave_like "submitting to a protected action as wrong user"
       end
 
       describe "attempting to access the Edit Food page" do
         let!(:food) { FactoryGirl.create :food }
         before { get edit_food_path(food) }
-        specify { expect(response).to redirect_to root_path }
+        it_should_behave_like "submitting to a protected action as wrong user"
       end
 
       describe "submitting a PATCH request to the Foods#update action" do
         let!(:food) { FactoryGirl.create :food }
         before { patch food_path(food) }
-        specify { expect(response).to redirect_to root_path }
+        it_should_behave_like "submitting to a protected action as wrong user"
       end
 
       describe "attempting to access the Food Import page" do
         before { get new_food_import_path }
-        specify { expect(response).to redirect_to root_path }
+        it_should_behave_like "submitting to a protected action as wrong user"
       end
 
       describe "submitting a POST request to the FoodImports#create action" do
         before { post food_imports_path }
-        specify { expect(response).to redirect_to root_path }
+        it_should_behave_like "submitting to a protected action as wrong user"
       end
     end
   end
