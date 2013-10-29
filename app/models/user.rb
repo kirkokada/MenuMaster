@@ -50,6 +50,10 @@ class User < ActiveRecord::Base
 		self.relationships.find_by(followed_id: other_user.id).destroy!
 	end
 
+	def to_param
+		self.username
+	end
+
 	private
 
 		def create_token(column)

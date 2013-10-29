@@ -24,7 +24,11 @@ describe "IngredientPages" do
 
   	describe "add ingredient button" do
       let(:amount) { "20" }
-      before { fill_in "Amount", with: amount }
+      before do
+        within "div#food_#{food.id}" do
+          fill_in "Amount", with: amount
+        end 
+      end
   		
   		it "should increment the ingredient count" do
   			expect { click_button "Add" }.to change(Ingredient, :count).by(1)
