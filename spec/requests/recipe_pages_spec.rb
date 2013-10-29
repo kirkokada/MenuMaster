@@ -68,7 +68,7 @@ describe "RecipePages" do
 
     describe "page" do
 
-  		it { should have_title recipe.name }
+  		it { should have_title full_title(recipe.name) }
   		it { should have_content recipe.description }
   		it { should have_content "Ingredients" }
       it { should have_selector "div#ingredient_#{ingredient_1.id}" }
@@ -148,6 +148,28 @@ describe "RecipePages" do
     end
 
     describe "ingredients" do
+
+      describe "Add ingredient", js: true do
+        let!(:food) { FactoryGirl.create(:food) }
+        before { click_link "Add ingredients" }
+
+        describe "page" do
+          it { should have_title full_title(recipe.name) }
+          it { should have_selector 'h3', text: "Add Ingredients" }
+          it { should have_selector "div#food_#{food.id}" }
+          it { should have_link "Return to ingredient list" }
+        end
+
+        describe "button should add ingredient" do
+          before do
+            fill_in "Amount", with: "20"
+            click_button "Add"
+            click_link "Return"
+          end
+
+          it { should have_content food.name }
+        end
+      end
 
       describe "updating amount", js: true do
         let(:new_amount) { 7777 }

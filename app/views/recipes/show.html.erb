@@ -9,7 +9,7 @@
 			Ingredients
 		</h3>
 		<% if current_user == @recipe.user %>
-			<%= link_to "+ Add ingredients", new_recipe_ingredient_path(@recipe), class: "pull-right" %>
+			<%= link_to "+ Add ingredients", new_recipe_ingredient_path(@recipe), class: "pull-right", remote: true %>
 		<% end %>
 		<% if @ingredients.any? %>
 			<%= will_paginate @ingredients %>

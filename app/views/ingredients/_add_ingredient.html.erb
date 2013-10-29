@@ -1,0 +1,5 @@
+<h3>Add Ingredients</h3>
+<h2>Nutritional values per 100g</h2>
+<%= link_to "<< Return to ingredient list", recipe  %>
+<%= will_paginate foods %>
+<%= render 'ingredient_table', foods: foods, recipe: recipe %>
