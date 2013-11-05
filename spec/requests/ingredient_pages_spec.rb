@@ -31,7 +31,11 @@ describe "IngredientPages" do
       end
   		
   		it "should increment the ingredient count" do
-  			expect { click_button "Add" }.to change(Ingredient, :count).by(1)
+  			expect do
+          within "div#food_#{food.id}" do
+            click_button "Add"
+          end 
+        end.to change(Ingredient, :count).by(1)
   		end
 
   		describe "after clicking the button", js: true do

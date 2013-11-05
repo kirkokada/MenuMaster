@@ -64,6 +64,35 @@ describe "RecipePages" do
                                       amount: 20
     end
 
+    describe "URL" do
+      specify { recipe_path(recipe).should eq "/recipes/#{recipe.friendly_id}" }
+
+      describe "after editing recipe name" do
+        let!(:old_path) { "/recipes/#{recipe.slug}" }
+        let(:new_name) { "new name" }
+
+        before do
+          visit edit_recipe_path(recipe)
+          fill_in "Name", with: new_name
+          click_button "Update"
+        end
+
+        specify { recipe_path(recipe.reload).should_not eq old_path}
+        specify { recipe_path(recipe.reload).should eq "/recipes/#{recipe.friendly_id}" }
+
+        it "should update the friendly id" do
+          get recipe_path(recipe.reload)
+          expect(page).to have_title full_title(new_name)
+        end
+
+        it "should redirect to the correct page when using old url" do
+          get old_path
+          expect(page).to have_title full_title(new_name)
+          expect(current_path).to eq recipe_path(recipe.reload)
+        end
+      end
+    end
+
 		before { visit recipe_path(recipe) }	
 
     describe "page" do
@@ -74,9 +103,11 @@ describe "RecipePages" do
       it { should have_selector "div#ingredient_#{ingredient_1.id}" }
       it { should have_content ingredient_1.name }
       it { should have_content ingredient_1.amount }
+      it { should have_link "X", href: recipe_ingredient_path(recipe, ingredient_1) }
       it { should have_selector "div#ingredient_#{ingredient_2.id}" }
       it { should have_content ingredient_2.name }
       it { should have_content ingredient_2.amount } 
+      it { should have_link "X", href: recipe_ingredient_path(recipe, ingredient_2) }
   		it { should have_link "Add ingredient", href: new_recipe_ingredient_path(recipe) }
   		it { should have_link "edit", href: edit_recipe_path(recipe) }
 

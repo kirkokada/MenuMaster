@@ -231,7 +231,18 @@ describe "AuthenticationPages" do
         end
         
         it { should_not have_title full_title("Add ingredient") }
-        it { should_not have_title full_title("Sign in") }
+        it { should have_title full_title('') }
+      end
+
+      describe "visiting Recipes#edit page" do
+        let(:recipe) { FactoryGirl.create :recipe, user: wrong_user }
+        before do
+          sign_in user
+          visit edit_recipe_path(recipe)
+        end
+
+        it { should have_title full_title('') }
+        it { should_not have_title full_title(recipe.name) }
       end
     end
 

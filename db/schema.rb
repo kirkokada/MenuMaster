@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131003061746) do
+ActiveRecord::Schema.define(version: 20131031053958) do
 
   create_table "foods", force: true do |t|
     t.string   "name"
@@ -24,6 +24,19 @@ ActiveRecord::Schema.define(version: 20131003061746) do
   end
 
   add_index "foods", ["name"], name: "index_foods_on_name"
+
+  create_table "friendly_id_slugs", force: true do |t|
+    t.string   "slug",                      null: false
+    t.integer  "sluggable_id",              null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope"
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
 
   create_table "ingredients", force: true do |t|
     t.integer  "food_id"
@@ -56,9 +69,11 @@ ActiveRecord::Schema.define(version: 20131003061746) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "slug"
   end
 
   add_index "recipes", ["name"], name: "index_recipes_on_name"
+  add_index "recipes", ["slug"], name: "index_recipes_on_slug"
   add_index "recipes", ["user_id"], name: "index_recipes_on_user_id"
 
   create_table "relationships", force: true do |t|

@@ -38,11 +38,15 @@ class RecipesController < ApplicationController
 	end
 
 	def show
-		@recipe = Recipe.find(params[:id])
+		@recipe = Recipe.friendly.find(params[:id])
 		@ingredients = @recipe.ingredients.paginate(page: params[:page])
 		@title = "#{@recipe.name} by #{@recipe.user.username}"
 		respond_to do |format|
-			format.html
+			format.html do
+				if request.path != recipe_path(@recipe)
+					redirect_to @recipe
+				end
+			end
 			format.js
 		end
 	end
@@ -62,7 +66,9 @@ class RecipesController < ApplicationController
 		end
 
 		def correct_recipe
-			@recipe = current_user.recipes.find_by(id: params[:id])
-			redirect_to root_path if @recipe.nil? 
+			@recipe = current_user.recipes.friendly.find(params[:id])
+		rescue
+			redirect_to root_path
 		end
+		
 end

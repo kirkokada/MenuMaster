@@ -64,9 +64,9 @@ class IngredientsController < ApplicationController
 	private
 
 		def current_user_recipe
-			unless @recipe = current_user.recipes.find_by_id(params[:recipe_id])
-				redirect_to root_path
-			end
+			@recipe = current_user.recipes.friendly.find(params[:recipe_id])
+		rescue
+			redirect_to root_path
 		end
 
 		def ingredient_params
