@@ -110,6 +110,7 @@ describe "RecipePages" do
       it { should have_link "X", href: recipe_ingredient_path(recipe, ingredient_2) }
   		it { should have_link "Add ingredient", href: new_recipe_ingredient_path(recipe) }
   		it { should have_link "edit", href: edit_recipe_path(recipe) }
+      it { should have_link "My Recipes" }
 
   		describe "as another user" do
   			let(:other_user) { FactoryGirl.create :user }
@@ -120,6 +121,7 @@ describe "RecipePages" do
   			end
 
   			it { should_not have_link "edit", href: edit_recipe_path(recipe) }
+        it { should_not have_link "My Recipes", href: recipes_path }
   		end
 
   		describe "Add ingredient link" do

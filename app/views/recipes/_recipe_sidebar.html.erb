@@ -11,3 +11,8 @@
 <section>
 	<i><%= recipe.description %></i>
 </section>
+<section>
+	<% if current_user == recipe.user %>
+		<%= link_to "My Recipes", recipes_path  %>
+	<% end %>
+</section>

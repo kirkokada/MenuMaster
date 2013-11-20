@@ -50,8 +50,15 @@ describe "StaticPages" do
 
       describe "links" do
         
-        it { should have_link "Recipes", href: recipes_path }
+        it { should have_link "Recipes", href: home_recipe_nav_path }
 
+      end
+
+      describe "recipes links" do
+        before { click_link "Recipes" }
+
+        it { should have_link "My Recipes", href: recipes_path }
+        it { should have_link "Search" }
       end
 
       describe "follower/following counts" do

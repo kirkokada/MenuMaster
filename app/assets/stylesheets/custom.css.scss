@@ -195,6 +195,18 @@ aside {
   }
 }
 
+/* Home Menu */
+
+.home_menu_item {
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  margin-top: 10px;
+  @include box_sizing;
+  h1 {
+    padding-top: 15px;
+  }
+}
+
 /* Miscellaneous */
 
 .debug_dump {
@@ -294,6 +306,7 @@ aside {
   display: block;
 }
 .timestamp {
+  font-size: 0.75em;
   color: $grayLight;
 }
 .gravatar {

@@ -20,6 +20,7 @@ MenuMaster::Application.routes.draw do
     get "help/"    => :help
     get "about/"   => :about
     get "contact/" => :contact
+    get "home_recipe_nav" => :recipe_nav
   end
 
   get "signin/"  => 'sessions#new'

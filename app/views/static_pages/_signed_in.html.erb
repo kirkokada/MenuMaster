@@ -1,0 +1,24 @@
+<div class="row">
+	<aside class="span4">
+		<section>
+			<%= render 'shared/user_info' %>
+		</section>
+		<section>
+			<%= render 'shared/stats' %>
+		</section>
+		<section>
+			<%= render 'shared/micropost_form' %>
+		</section>
+		<section>
+			<%= render 'shared/feed' %>
+		</section>
+	</aside>
+	<div class="span8" id="home_menu">
+		<div class="home_menu_item">
+			<h1><%= link_to "Recipes", home_recipe_nav_path, remote: true %></h1>
+		</div>
+		<div class="home_menu_item">
+			<h1>Macro Tracker</h1>
+		</div>
+	</div>
+</div>

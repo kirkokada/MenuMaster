@@ -16,4 +16,11 @@ class StaticPagesController < ApplicationController
   def contact
   	
   end
+
+  def recipe_nav
+    respond_to do |format|
+      format.js
+      format.html
+    end
+  end
 end
