@@ -1,12 +1,6 @@
 require 'spec_helper'
 
 describe "RecipePages" do
-
-  before(:all) do 
-    User.delete_all
-    Food.delete_all
-    Recipe.delete_all
-  end 
   
   subject { page }
   let(:user) { FactoryGirl.create :user }
@@ -229,7 +223,10 @@ describe "RecipePages" do
 
         it { should have_content new_amount }
         it "should disappear" do
-          expect(page.find("#ingredient_#{ingredient_1.id}")).not_to have_button "Update"
+          within "#ingredient_#{ingredient_1.id}" do
+            expect(page).to have_link "X"
+            expect(page).not_to have_button "Update"
+          end
         end
       end
 

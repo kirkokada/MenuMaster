@@ -9,9 +9,9 @@ gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate', '0.0.9'
 gem 'roo'
 gem 'friendly_id', github: 'norman/friendly_id', branch: '5.0.0.rc2'
+gem 'pg'
 
 group :development, :test do
-  gem 'sqlite3', '1.3.7'
   gem 'rspec-rails', '2.13.1'
   gem 'guard-rspec', '2.5.0'
   gem 'spork-rails', github: 'railstutorial/spork-rails'
@@ -26,7 +26,7 @@ group :test do
   gem 'capybara', '2.1.0'
   gem 'factory_girl_rails', '4.2.0'
   gem 'cucumber-rails', '1.3.0', :require => false
-  gem 'database_cleaner', '< 1.1.0'
+  gem 'database_cleaner'
   gem 'launchy'
 
   # Uncomment these lines on OS X.
@@ -52,8 +52,4 @@ gem 'jbuilder', '1.0.2'
 
 group :doc do
   gem 'sdoc', '0.3.20', require: false
-end
-
-group :production do
-  gem 'pg', '0.15.1'
 end

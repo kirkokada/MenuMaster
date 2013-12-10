@@ -51,9 +51,11 @@ describe "IngredientPages" do
             click_button "Add" 
           end
         end
-  			it { should have_content amount }
         it "should be removed" do
-          expect(page.find(ingredient)).not_to have_button "Add"
+          within ingredient do
+            expect(page).to have_selector "span", text: amount
+            expect(page).not_to have_button "Add"
+          end
         end
   		end
   	end
