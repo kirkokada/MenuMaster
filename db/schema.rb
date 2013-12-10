@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131031053958) do
+ActiveRecord::Schema.define(version: 20131126081914) do
 
   create_table "foods", force: true do |t|
     t.string   "name"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20131031053958) do
     t.float    "protein"
     t.float    "carbs"
     t.float    "fat"
+    t.string   "name"
   end
 
   add_index "ingredients", ["food_id", "recipe_id"], name: "index_ingredients_on_food_id_and_recipe_id", unique: true
@@ -70,6 +71,10 @@ ActiveRecord::Schema.define(version: 20131031053958) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "slug"
+    t.float    "calories"
+    t.float    "protein"
+    t.float    "carbs"
+    t.float    "fat"
   end
 
   add_index "recipes", ["name"], name: "index_recipes_on_name"

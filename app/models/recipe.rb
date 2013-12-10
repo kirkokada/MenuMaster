@@ -1,29 +1,15 @@
 class Recipe < ActiveRecord::Base
 	extend FriendlyId
+	include Search
 	friendly_id :slug_candidates, use: [:slugged, :history]
 	belongs_to :user
 	validates :name, presence: true
 	validates :slug, presence: true, uniqueness: { case_sensitive: false }
 	has_many :ingredients, dependent: :destroy
 
+
 	def should_generate_new_friendly_id?
 		name_changed?
-	end
-
-	def calories
-		self.ingredients.sum(:calories)
-	end
-
-	def carbs
-		self.ingredients.sum(:carbs)
-	end
-
-	def protein
-		self.ingredients.sum(:protein)
-	end
-
-	def fat
-		self.ingredients.sum(:fat)
 	end
 
 	def slug_candidates
@@ -31,5 +17,12 @@ class Recipe < ActiveRecord::Base
 			"#{name} by #{user.username}",
 			"#{name} by #{user.username} #{Time.now.to_s}"
 		]
+	end
+
+	def set_nutritional_values
+		self.update_attributes(calories: ingredients.sum(:calories),
+			                     carbs: ingredients.sum(:carbs),
+			                     protein: ingredients.sum(:protein),
+			                     fat: ingredients.sum(:fat))
 	end
 end

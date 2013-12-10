@@ -1,0 +1,19 @@
+<h3>
+	Ingredients
+</h3>
+<% if current_user == @recipe.user %>
+	<%= link_to "+ Add ingredients", new_recipe_ingredient_path(@recipe), class: "pull-right", remote: true %>
+<% end %>
+<%= form_tag recipe_path(@recipe), method: "get", 
+                                   id: "recipe_search",
+                                   remote: true do %>
+  <%= hidden_field_tag :sort, params[:sort] %>
+	<%= hidden_field_tag :direction, params[:direction] %>
+	<%= render "shared/search_form" %>
+<% end %>
+<% if @ingredients.any? %>
+	<div class="table">
+		<%= render 'recipe_ingredients_table' %>
+	</div>
+	<%= will_paginate @ingredients %>
+<% end %>

@@ -9,8 +9,12 @@
 				<%= link_to "+ Add food", new_food_path %>
 			</div>
 		<% end %>
-		<%= render 'foods_table' %>
-		<%= will_paginate @foods %>
+		<%= form_tag foods_path, method: "get", id: "foods_search", class: "search" do %>
+			<%= render 'shared/search_form', path: foods_path %>
+			<div id="foods" class="table">
+				<%= render 'foods_table' %>
+			</div>
+		<% end %>
 		<% if current_user.admin? %>
 			<div class="btn-group">
 				<a href="#" class="btn btn-mini dropdown dropdown-toggle" data-toggle="dropdown">

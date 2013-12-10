@@ -1,4 +1,6 @@
 class Food < ActiveRecord::Base
+	include Search
+
 	validates :name,     presence: true, uniqueness: { case_sensitive: false }
 	validates :calories, presence: true
 	validates :fat,      presence: true

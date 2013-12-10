@@ -1,0 +1,7 @@
+<%= hidden_field_tag :sort, params[:sort] %>
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= render "shared/table_headers", object_model: Recipe, show_amount: false %>
+<% if @recipes.any? %>
+	<%= render @recipes %>
+<% end %>
+

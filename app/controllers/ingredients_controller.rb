@@ -3,7 +3,7 @@ class IngredientsController < ApplicationController
 	before_filter :current_user_recipe
 
 	def new
-		@foods = Food.paginate(page: params[:page])
+		@foods = Food.search(params[:search]).order(order_args(Food)).paginate(page: params[:page])
 		respond_to do |format|
 			format.html
 			format.js
@@ -50,7 +50,7 @@ class IngredientsController < ApplicationController
 		@ingredient = @recipe.ingredients.find(params[:id])
 		if @ingredient.update_attributes(ingredient_params)
 			respond_to do |format|
-				format.html
+				format.html { redirect_to new_recipe_ingredient_path(@recipe) }
 				format.js
 			end
 		else

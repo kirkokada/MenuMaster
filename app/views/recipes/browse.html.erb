@@ -1,10 +1,9 @@
-<% provide :title, "My recipes" %>
+<% provide :title, "Browse Recipes" %>
 
 <div class="row">
 	<div class="span8 offset2">
-		<h1>My Recipes</h1>
-		<%= link_to "+ New recipe", new_recipe_path, class: "pull-right" %>
-		<%= form_tag recipes_path, method: "get", id: "recipes_search", class: "search" do %>
+		<h1>Browse Recipes</h1>
+		<%= form_tag browse_recipes_path, method: "get", id: "recipes_search", class: "search" do %>
 			<%= render 'shared/search_form' %>
 			<div class="table" id="recipes">
 				<%= render 'recipes_table' %>

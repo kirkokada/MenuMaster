@@ -12,6 +12,9 @@ MenuMaster::Application.routes.draw do
   resources :food_imports, only: [:new, :create]
   resources :recipes do
     resources :ingredients
+    collection do
+      get :browse
+    end
   end
   
   get "signup/"  => 'users#new'

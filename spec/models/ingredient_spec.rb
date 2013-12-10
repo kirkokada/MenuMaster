@@ -19,7 +19,6 @@ describe Ingredient do
   it { should respond_to :recipe }
   it { should respond_to :recipe_id }
   it { should respond_to :name }
-  its(:name)   { should eq food.name }
   its(:food)   { should eq food }
   its(:recipe) { should eq recipe }
   its(:proportion) { should == ingredient.amount / 100.0 }
@@ -28,6 +27,7 @@ describe Ingredient do
     
     before { ingredient.save }
 
+    its(:name)     { should eq food.name }
     its(:calories) { should == food.calories * ingredient.proportion }
     its(:carbs)    { should == food.carbs    * ingredient.proportion }
     its(:fat)      { should == food.fat      * ingredient.proportion }

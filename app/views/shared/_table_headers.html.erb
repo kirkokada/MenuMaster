@@ -1,9 +1,19 @@
 <div class="table_row table_header">
-	<span>Name</span>
-	<span>Calories (kcal)</span>
-	<span>Carbs (g)</span>
-	<span>Protein (g)</span>
-	<span>Fat (g)</span>
+	<% %w[name calories carbs protein fat].each do |column_name| %>
+		<span>
+			<%= sortable object_model, column_name %>
+			<% if column_name != "name" %>
+				(<%= (column_name == "calories") ? "kCal" : "g" %>)
+			<% end %>
+			<% if params[:sort] == column_name %>
+				<% if params[:direction] == "asc"  %>
+					<i class="icon-chevron-up"></i>
+				<% else %>
+					<i class="icon-chevron-down"></i>
+				<% end %>
+			<% end %>
+		</span>
+	<% end %>
 	<% if show_amount %>
 		<span>Amount (g)</span>
 		<span></span>

@@ -1,5 +1,14 @@
 <h3>Add Ingredients</h3>
 <h2>Nutritional values per 100g</h2>
-<%= link_to "<< Return to ingredient list", recipe  %>
+<%= link_to "<< Return to ingredient list", recipe, remote: true  %>
+<%= form_tag new_recipe_ingredient_path(recipe), method: "get", 
+                                   id: "recipe_search",
+                                   remote: true do %>
+  <%= hidden_field_tag :sort, params[:sort] %>
+	<%= hidden_field_tag :direction, params[:direction] %>
+	<%= render "shared/search_form" %>
+<% end %>
+<div class="table">
+	<%= render 'ingredient_table', foods: foods, recipe: recipe %>
+</div>
 <%= will_paginate foods %>
-<%= render 'ingredient_table', foods: foods, recipe: recipe %>

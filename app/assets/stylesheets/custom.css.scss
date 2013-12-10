@@ -248,9 +248,6 @@ aside {
       display: table-cell;
       padding: 5px 5px;
       border-top: 1px solid $grayLighter;
-      .hidden {
-        display: none;
-      }
     }
     &:last-child {
       border-bottom: 1px solid $grayLighter;
@@ -260,6 +257,10 @@ aside {
       margin-top: 5px;
     }
   }
+}
+
+.hidden {
+  display: none;
 }
 
 #add_food_link {

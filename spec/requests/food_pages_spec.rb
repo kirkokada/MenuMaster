@@ -71,37 +71,57 @@ describe "FoodPages" do
   end
 
   describe "index" do
-  	let!(:food) { FactoryGirl.create :food }
-		before do
-			sign_in user
-			visit foods_path
-		end
 
   	describe "page" do
-  		it { should have_title full_title("All foods") }
-  		it { should have_content "All foods" }
-  		it { should have_link food.name, href: food_path(food) }
-			it { should_not have_link "Edit" } 		
-			it { should_not have_link "Delete" }
 
-			it "should list all foods" do
-				Food.all.each do |food|
-					expect(page).to have_selector "div#food_#{food.id}"
+  		describe "as a non-admin user" do
+  			
+		  	let!(:food_1) { FactoryGirl.create :food }
+		  	let!(:food_2) { FactoryGirl.create :food }
+
+				before do
+					sign_in user
+					visit foods_path
 				end
-			end
 
-			describe "pagination" do
-				before(:all) do
-					30.times { FactoryGirl.create :food }
+	  		it { should have_title full_title("All foods") }
+	  		it { should have_content "All foods" }
+				it { should_not have_link "Edit" } 		
+				it { should_not have_link "Delete" }
+
+				describe "table" do
+
+			  	it { should have_content food_1.name }
+			  	it { should have_content food_2.name }
+
+					it_should_behave_like "a sortable table" do
+						let(:object_1) { food_1 }
+						let(:object_2) { food_2 }
+					end
 				end
-				after(:all) { Food.delete_all }
+				
+				describe "pagination" do
+					before(:all) do
+						31.times { FactoryGirl.create :food }
+					end
+					after(:all) { Food.delete_all }
 
-				it { should have_selector "div.pagination" }
-			end
+					it { should have_selector ".pagination" }
+
+					it "should list all foods" do
+						Food.paginate(page: 1) do |food|
+							expect(page).to have_selector "div#food_#{food.id}"
+						end
+					end
+				end
+  		end
+
+
 
 			describe "as an admin" do
+				let!(:food) { FactoryGirl.create :food }
+
 				before do
-					click_link "Sign out"
 					sign_in admin
 					visit foods_path
 				end

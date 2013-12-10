@@ -39,7 +39,7 @@ class RecipesController < ApplicationController
 
 	def show
 		@recipe = Recipe.friendly.find(params[:id])
-		@ingredients = @recipe.ingredients.paginate(page: params[:page])
+		@ingredients = @recipe.ingredients.search(params[:search]).order(order_args(Ingredient)).paginate(page: params[:page])
 		@title = "#{@recipe.name} by #{@recipe.user.username}"
 		respond_to do |format|
 			format.html do
@@ -52,12 +52,24 @@ class RecipesController < ApplicationController
 	end
 
 	def index
-		@recipes = current_user.recipes.paginate(page: params[:page])
+		@recipes = current_user.recipes.search(params[:search]).order(order_args(Recipe)).paginate(page: params[:page])
+		respond_to do |format|
+			format.html
+			format.js { render :table }
+		end
 	end
 
 	def destroy
 		@recipe.destroy
 		redirect_to recipes_path
+	end
+
+	def browse
+		@recipes = Recipe.search(params[:search]).order(order_args(Recipe)).paginate(page: params[:page])
+		respond_to do |format|
+			format.html
+			format.js { render :table }
+		end
 	end
 
 	private

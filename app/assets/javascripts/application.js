@@ -15,3 +15,18 @@
 //= require bootstrap
 //= require turbolinks
 //= require_tree .
+
+$(function(){
+	//Sorting and pagination links
+	$(document).on("click", ".table_header span a",
+		function(){
+			$.getScript(this.href);
+			return false;
+		});
+
+	$(document).on("submit", ".search",
+		function(){
+			$.get(this.action, $(this).serialize(), null, 'script');
+			return false;
+		});
+});

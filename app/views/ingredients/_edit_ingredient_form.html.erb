@@ -1,7 +1,7 @@
 <div id="ingredient_<%= ingredient.id %>" class="table_row">
 	<%= render 'shared/basic_info', object: ingredient %>
-	<%= form_for([recipe, ingredient], 
-	              remote: true, html: { class: "ingredient_submit"}) do |f| %>
+	<%= form_for([recipe, ingredient], remote: true, 
+	                                   html: { class: "ingredient_submit"}) do |f| %>
 		<span class="amount-input">
 			<%= f.label :amount, class: "hidden" %>
 			<%= f.text_field :amount %>

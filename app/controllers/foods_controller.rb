@@ -25,10 +25,11 @@ class FoodsController < ApplicationController
 	end
 
 	def index
-		@foods = Food.order(:name).paginate(page: params[:page], 
-																										per_page: 30)
+		@foods = Food.search(params[:search]).order(order_args(Food)).paginate(page: params[:page], 
+																										                       per_page: 30)
 		respond_to do |format|
 			format.html
+			format.js
 			format.csv { render text: Food.to_csv }
 			format.xls
 		end

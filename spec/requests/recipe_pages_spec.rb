@@ -1,65 +1,70 @@
 require 'spec_helper'
 
 describe "RecipePages" do
+
   before(:all) do 
     User.delete_all
     Food.delete_all
+    Recipe.delete_all
   end 
+  
   subject { page }
   let(:user) { FactoryGirl.create :user }
   before { sign_in user }
 
   describe "recipe creation" do
 
-  	before { visit new_recipe_path }
+    before { visit new_recipe_path }
 
-  	describe "page" do
-  		it { should have_title full_title("New Recipe") }
-  		it { should have_content "New Recipe" }
-  	end
+    describe "page" do
+      it { should have_title full_title("New Recipe") }
+      it { should have_content "New Recipe" }
+    end
 
-  	describe "with invalid information" do
-  		before { click_button "Save" }
+    describe "with invalid information" do
+      before { click_button "Save" }
 
-  		it "should not create a recipe" do
-  			expect { click_button "Save" }.not_to change(Recipe, :count)
-  		end
+      it "should not create a recipe" do
+        expect { click_button "Save" }.not_to change(Recipe, :count)
+      end
 
-  		it { should have_selector 'div.alert.alert-error' }
-  	end
+      it { should have_selector 'div.alert.alert-error' }
+    end
 
-  	describe "with valid information" do
-  		let(:title) { "Recipe" }
-  		let(:description) { "Tastes good" }
-  		before do
-  		  fill_in "Name", with: title
-  		  fill_in "Description", with: description
-  		end
+    describe "with valid information" do
+      let(:title) { "Recipe" }
+      let(:description) { "Tastes good" }
+      before do
+        fill_in "Name", with: title
+        fill_in "Description", with: description
+      end
 
-  		it "should create a recipe" do
-  			expect { click_button "Save" }.to change(Recipe, :count).by(1)
-  		end
+      it "should create a recipe" do
+        expect { click_button "Save" }.to change(Recipe, :count).by(1)
+      end
 
-  		describe "after submission" do
-  			before { click_button "Save" }
+      describe "after submission" do
+        before { click_button "Save" }
 
-  			it "should redirect to recipe show page" do
-  				expect(page).to have_title title
-  				expect(page).to have_content description
-  			end
-  		end
-  	end
+        it "should redirect to recipe show page" do
+          expect(page).to have_title title
+          expect(page).to have_content description
+        end
+      end
+    end
   end
 
   describe "show" do
-  	let(:recipe) { FactoryGirl.create :recipe, user: user }
+    let(:recipe) { FactoryGirl.create :recipe, user: user }
     let!(:ingredient_1) do 
       FactoryGirl.create :ingredient, recipe: recipe, 
+                                      name: 'a ingredient',
                                       food: FactoryGirl.create(:food),
                                       amount: 6
     end
     let!(:ingredient_2) do 
       FactoryGirl.create :ingredient, recipe: recipe, 
+                                      name: "Z ingredient",
                                       food: FactoryGirl.create(:food),
                                       amount: 20
     end
@@ -93,13 +98,13 @@ describe "RecipePages" do
       end
     end
 
-		before { visit recipe_path(recipe) }	
+    before { visit recipe_path(recipe) }  
 
     describe "page" do
 
-  		it { should have_title full_title(recipe.name) }
-  		it { should have_content recipe.description }
-  		it { should have_content "Ingredients" }
+      it { should have_title full_title(recipe.name) }
+      it { should have_content recipe.description }
+      it { should have_content "Ingredients" }
       it { should have_selector "div#ingredient_#{ingredient_1.id}" }
       it { should have_content ingredient_1.name }
       it { should have_content ingredient_1.amount }
@@ -108,27 +113,35 @@ describe "RecipePages" do
       it { should have_content ingredient_2.name }
       it { should have_content ingredient_2.amount } 
       it { should have_link "X", href: recipe_ingredient_path(recipe, ingredient_2) }
-  		it { should have_link "Add ingredient", href: new_recipe_ingredient_path(recipe) }
-  		it { should have_link "edit", href: edit_recipe_path(recipe) }
+      it { should have_link "Add ingredient", href: new_recipe_ingredient_path(recipe) }
+      it { should have_link "edit", href: edit_recipe_path(recipe) }
       it { should have_link "My Recipes" }
 
-  		describe "as another user" do
-  			let(:other_user) { FactoryGirl.create :user }
-  			before do
-  				click_link "Sign out"
-  				sign_in other_user
-  				visit recipe_path(recipe)
-  			end
+      describe "ingredient table" do
 
-  			it { should_not have_link "edit", href: edit_recipe_path(recipe) }
+        it_should_behave_like "a sortable table" do
+          let(:object_1) { ingredient_1 }
+          let(:object_2) { ingredient_2 }
+        end
+      end
+
+      describe "as another user" do
+        let(:other_user) { FactoryGirl.create :user }
+        before do
+          click_link "Sign out"
+          sign_in other_user
+          visit recipe_path(recipe)
+        end
+
+        it { should_not have_link "edit", href: edit_recipe_path(recipe) }
         it { should_not have_link "My Recipes", href: recipes_path }
-  		end
+      end
 
-  		describe "Add ingredient link" do
-  			before { click_link "Add ingredient" }
+      describe "Add ingredient link" do
+        before { click_link "Add ingredient" }
         it { should have_title "Add ingredient" }
       end
-  	end
+    end
 
     describe "edit", js: true do
       before { click_link "edit" }
@@ -195,8 +208,10 @@ describe "RecipePages" do
 
         describe "button should add ingredient" do
           before do
-            fill_in "Amount", with: "20"
-            click_button "Add"
+            within "#food_#{food.id}" do
+              fill_in "Amount", with: "20"
+              click_button "Add"
+            end
             click_link "Return"
           end
 
@@ -204,7 +219,7 @@ describe "RecipePages" do
         end
       end
 
-      describe "updating amount", js: true do
+      describe "after updating amount", js: true do
         let(:new_amount) { 7777 }
         before do 
           click_link ingredient_1.amount
@@ -213,6 +228,9 @@ describe "RecipePages" do
         end 
 
         it { should have_content new_amount }
+        it "should disappear" do
+          expect(page.find("#ingredient_#{ingredient_1.id}")).not_to have_button "Update"
+        end
       end
 
       describe "removing ingredient" do
@@ -236,33 +254,72 @@ describe "RecipePages" do
   end
 
   describe "index" do
+    let!(:recipe_1) { FactoryGirl.create :recipe, user: user, name: "A recipe name" }
+    let!(:recipe_2) { FactoryGirl.create :recipe, user: user, name: "z recipe name" }
 
-    before do 
-      3.times { FactoryGirl.create :recipe, user: user }
-      visit recipes_path
-    end
+    before { visit recipes_path }
 
     describe "page" do
 
       it { should have_title "My recipes" }
-      it "should list each recipe" do
-        user.recipes.each do |recipe|
-          expect(page).to have_selector "div#recipe_#{recipe.id}"
-        end
-      end
       it { should have_link "New recipe", href: new_recipe_path }
       it { should_not have_content "Amount" }
 
+      describe "table" do
+
+        it_should_behave_like "a sortable table" do
+          let(:object_1) { recipe_1 }
+          let(:object_2) { recipe_2 }
+        end
+      end
+
       describe "pagination" do
+
         before do 
-          30.times { FactoryGirl.create :recipe, user: user }
-          visit recipes_path
+          30.times { FactoryGirl.create(:recipe, user: FactoryGirl.create(:user)) }
+        end
+
+        it "should list each recipe" do
+          user.recipes.order("name asc").paginate(page: 1).each do |recipe|
+            expect(page).to have_selector "div#recipe_#{recipe.id}"
+          end
+        end
+      end
+    end
+  end
+
+  describe "browse" do
+    let!(:recipe_1) { FactoryGirl.create :recipe, user: FactoryGirl.create(:user),
+                                                  name: 'a recipe' }
+    let!(:recipe_2) { FactoryGirl.create :recipe, user: FactoryGirl.create(:user),
+                                                  name: 'B recipe' }
+
+    before { visit browse_recipes_path }
+
+    describe "page" do
+      it { should have_title "Browse Recipes" }
+      it { should have_selector "h1", text: "Browse Recipes" }
+
+      describe "table" do
+
+        it_should_behave_like "a sortable table" do 
+          let!(:object_1) { recipe_1 }
+          let!(:object_2) { recipe_2 }
+        end
+      end
+
+
+      describe "pagination" do  
+
+        before do 
+          31.times { FactoryGirl.create(:recipe, user: FactoryGirl.create(:user)) }
+          visit browse_recipes_path
         end
 
         it { should have_selector "div.pagination" }
 
         it "should list each recipe" do
-          user.recipes.paginate(page: 1).each do |recipe|
+          Recipe.order("lower(name) asc").paginate(page: 1).each do |recipe|
             expect(page).to have_selector "div#recipe_#{recipe.id}"
           end
         end

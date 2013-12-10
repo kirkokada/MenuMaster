@@ -1,8 +1,11 @@
 namespace :db do
   desc "Fill database with sample data"
   task populate: :environment do
+    puts "Populating users..."
     make_users
+    puts "Populating microposts..."
     make_microposts
+    puts "Populating relationships"
     make_relationships
   end
 end

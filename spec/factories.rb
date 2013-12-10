@@ -26,6 +26,10 @@ FactoryGirl.define do
 	factory :recipe do
 		sequence(:name) { |n| "Recipe #{n}"}
 		sequence(:description) { |n| "Description #{n}" }
+		sequence(:carbs) { |n| n * 2 }
+		sequence(:protein) { |n| n * 3 }
+		sequence(:fat) { |n| n * 4 }
+		sequence(:calories) { |n| n * 5 }
 		user
 	end
 

@@ -1,1 +1,2 @@
 $('aside#recipe_info').html('<%= escape_javascript(render("recipe_sidebar", recipe: @recipe)) %>')
+$('#ingredients').html("<%= escape_javascript(render('recipe_ingredients')) %>")

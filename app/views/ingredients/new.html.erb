@@ -1,11 +1,7 @@
 <% provide :title, "Add ingredients" %>
 
 <div class="row">
-	<div class="span8 offset2">
-		<h1>Add Ingredients</h1>
-		<h2>Nutritional values per 100g</h2>
-		<%= link_to "<< Return to \"#{@recipe.name}\"", @recipe  %>
-		<%= will_paginate @foods %>
-		<%= render 'ingredient_table', foods: @foods, recipe: @recipe %>
+	<div class="span8 offset2" id="ingredient">
+		<%= render 'add_ingredient', recipe: @recipe, foods: @foods %>
 	</div>
 </div>

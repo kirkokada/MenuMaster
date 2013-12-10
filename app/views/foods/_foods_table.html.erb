@@ -1,4 +1,5 @@
-<div id="foods" class="table">
-	<%= render 'shared/table_headers', show_amount: false %>
-	<%= render @foods %>
-</div>
+<%= hidden_field_tag :sort, params[:sort] %>
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= render 'shared/table_headers', object_model: Food, show_amount: false %>
+<%= render @foods %>
+<%= will_paginate @foods %>
