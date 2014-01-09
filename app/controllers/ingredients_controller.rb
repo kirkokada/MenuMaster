@@ -3,7 +3,7 @@ class IngredientsController < ApplicationController
 	before_filter :current_user_recipe
 
 	def new
-		@foods = Food.search(params[:search]).order(order_args(Food)).paginate(page: params[:page])
+		@foods = table_items(Food)
 		respond_to do |format|
 			format.html
 			format.js

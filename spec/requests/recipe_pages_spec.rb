@@ -52,14 +52,12 @@ describe "RecipePages" do
     let(:recipe) { FactoryGirl.create :recipe, user: user }
     let!(:ingredient_1) do 
       FactoryGirl.create :ingredient, recipe: recipe, 
-                                      name: 'a ingredient',
-                                      food: FactoryGirl.create(:food),
-                                      amount: 6
+                                      food: FactoryGirl.create(:food, name: "a Food"),
+                                      amount: 1
     end
     let!(:ingredient_2) do 
       FactoryGirl.create :ingredient, recipe: recipe, 
-                                      name: "Z ingredient",
-                                      food: FactoryGirl.create(:food),
+                                      food: FactoryGirl.create(:food, name: "Z Food"),
                                       amount: 20
     end
 
@@ -114,6 +112,11 @@ describe "RecipePages" do
       describe "ingredient table" do
 
         it_should_behave_like "a sortable table" do
+          def create_object
+            FactoryGirl.create :ingredient, recipe: recipe,
+                                            food: FactoryGirl.create(:food),
+                                            amount: 1
+          end
           let(:object_1) { ingredient_1 }
           let(:object_2) { ingredient_2 }
         end
@@ -176,7 +179,7 @@ describe "RecipePages" do
 
         describe "after deletion" do
           before { click_link "Delete" }
-          it { should have_title "My recipes" }
+          it { should have_title "My Recipes" }
         end
       end
 
@@ -250,75 +253,47 @@ describe "RecipePages" do
     end
   end
 
-  describe "index" do
+  describe "recipe lists" do
     let!(:recipe_1) { FactoryGirl.create :recipe, user: user, name: "A recipe name" }
     let!(:recipe_2) { FactoryGirl.create :recipe, user: user, name: "z recipe name" }
 
-    before { visit recipes_path }
+    describe "index page" do
+      before { visit recipes_path }
 
-    describe "page" do
-
-      it { should have_title "My recipes" }
+      it { should have_title "My Recipes" }
       it { should have_link "New recipe", href: new_recipe_path }
       it { should_not have_content "Amount" }
 
       describe "table" do
 
         it_should_behave_like "a sortable table" do
+
+          def create_object
+            FactoryGirl.create(:recipe, user: user)
+          end
+
           let(:object_1) { recipe_1 }
           let(:object_2) { recipe_2 }
         end
       end
-
-      describe "pagination" do
-
-        before do 
-          30.times { FactoryGirl.create(:recipe, user: FactoryGirl.create(:user)) }
-        end
-
-        it "should list each recipe" do
-          user.recipes.order("name asc").paginate(page: 1).each do |recipe|
-            expect(page).to have_selector "div#recipe_#{recipe.id}"
-          end
-        end
-      end
     end
-  end
 
-  describe "browse" do
-    let!(:recipe_1) { FactoryGirl.create :recipe, user: FactoryGirl.create(:user),
-                                                  name: 'a recipe' }
-    let!(:recipe_2) { FactoryGirl.create :recipe, user: FactoryGirl.create(:user),
-                                                  name: 'B recipe' }
-
-    before { visit browse_recipes_path }
-
-    describe "page" do
+    describe "browse page" do
+      before { visit browse_recipes_path }
       it { should have_title "Browse Recipes" }
       it { should have_selector "h1", text: "Browse Recipes" }
 
+
       describe "table" do
 
-        it_should_behave_like "a sortable table" do 
+        it_should_behave_like "a sortable table" do
+
+          def create_object
+            FactoryGirl.create(:recipe, user: user)
+          end
+
           let!(:object_1) { recipe_1 }
           let!(:object_2) { recipe_2 }
-        end
-      end
-
-
-      describe "pagination" do  
-
-        before do 
-          31.times { FactoryGirl.create(:recipe, user: FactoryGirl.create(:user)) }
-          visit browse_recipes_path
-        end
-
-        it { should have_selector "div.pagination" }
-
-        it "should list each recipe" do
-          Recipe.order("lower(name) asc").paginate(page: 1).each do |recipe|
-            expect(page).to have_selector "div#recipe_#{recipe.id}"
-          end
         end
       end
     end

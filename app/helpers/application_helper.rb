@@ -4,7 +4,7 @@ module ApplicationHelper
 		if page_title.empty?
 			base_title
 		else
-			"#{base_title} | #{page_title}"
+			"#{base_title} | #{page_title}".html_safe
 		end
 	end
 
@@ -28,5 +28,15 @@ module ApplicationHelper
 		else
 		  "#{sort_column(object_model)} #{sort_direction}"
 		end
+	end
+
+	# takes a searchable array of records as an argument, returns sorted & paginated collection
+	def table_items(collection) 
+		collection.search(params[:search]).order(order_args(collection)).paginate(page: params[:page], 
+																										                       per_page: 10)
+	end
+
+	def collection_type
+		%w[Recipe Food Ingredient]
 	end
 end

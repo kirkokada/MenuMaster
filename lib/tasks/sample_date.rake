@@ -5,8 +5,10 @@ namespace :db do
     make_users
     puts "Populating microposts..."
     make_microposts
-    puts "Populating relationships"
+    puts "Populating relationships..."
     make_relationships
+    puts "Populating recipes..."
+    make_recipes
   end
 end
 
@@ -42,4 +44,13 @@ def make_relationships
   followers = users[3..40]
   followed_users.each { |followed| user.follow!(followed) }
   followers.each { |follower| follower.follow!(user) }
+end
+
+def make_recipes
+  users = User.all(limit:10)
+  10.times do
+    name = Faker::Lorem.sentence(3)
+    description = Faker::Company.bs
+    users.each { |user| user.recipes.create!(name: name, description: description) }
+  end
 end

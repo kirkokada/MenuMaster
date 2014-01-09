@@ -18,7 +18,7 @@
 
 $(function(){
 	//Sorting and pagination links
-	$(document).on("click", ".table_header span a",
+	$(document).on("click", ".table_header span a, .pagination a",
 		function(){
 			$.getScript(this.href);
 			return false;

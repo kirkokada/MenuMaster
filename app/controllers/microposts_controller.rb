@@ -18,6 +18,18 @@ class MicropostsController < ApplicationController
     redirect_to root_url
   end
 
+  def index
+    @feed_items = current_user.feed.paginate(page: params[:page], per_page: 10)
+  end
+
+  def user
+    @user = User.find_by_username(params[:id])
+    @microposts = @user.microposts.paginate(page: params[:page])
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
 
   	def micropost_params

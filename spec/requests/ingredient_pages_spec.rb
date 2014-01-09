@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe "IngredientPages" do
   let!(:user) { FactoryGirl.create :user }
-  let!(:food_1) { FactoryGirl.create :food }
-  let!(:food_2) { FactoryGirl.create :food }
+  let!(:food_1) { FactoryGirl.create :food, name: "a Food" }
+  let!(:food_2) { FactoryGirl.create :food, name: "Z Food" }
   let!(:recipe) { FactoryGirl.create :recipe, user: user }
   
   subject { page }
@@ -22,6 +22,9 @@ describe "IngredientPages" do
       describe "table" do
         
         it_should_behave_like "a sortable table" do
+          def create_object
+            FactoryGirl.create(:food)
+          end
           let!(:object_1) { food_1 }
           let!(:object_2) { food_2 }
         end

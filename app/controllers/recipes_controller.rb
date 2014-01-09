@@ -1,5 +1,5 @@
 class RecipesController < ApplicationController
-	before_action :signed_in_user, except: :show
+	before_action :signed_in_user, except: [:show, :user]
 	before_action :correct_recipe, only: [:edit, :update, :destroy]
 
 	def new
@@ -39,7 +39,7 @@ class RecipesController < ApplicationController
 
 	def show
 		@recipe = Recipe.friendly.find(params[:id])
-		@ingredients = @recipe.ingredients.search(params[:search]).order(order_args(Ingredient)).paginate(page: params[:page])
+		@ingredients = table_items(@recipe.ingredients)
 		@title = "#{@recipe.name} by #{@recipe.user.username}"
 		respond_to do |format|
 			format.html do
@@ -52,7 +52,8 @@ class RecipesController < ApplicationController
 	end
 
 	def index
-		@recipes = current_user.recipes.search(params[:search]).order(order_args(Recipe)).paginate(page: params[:page])
+		@title = "My Recipes"
+		@recipes = table_items(current_user.recipes)
 		respond_to do |format|
 			format.html
 			format.js { render :table }
@@ -65,10 +66,21 @@ class RecipesController < ApplicationController
 	end
 
 	def browse
-		@recipes = Recipe.search(params[:search]).order(order_args(Recipe)).paginate(page: params[:page])
+		@title = "Browse Recipes"
+		@recipes = table_items(Recipe)
 		respond_to do |format|
-			format.html
-			format.js { render :table }
+			format.html { render :index }
+			format.js   { render :table }
+		end
+	end
+
+	def user
+		@user = User.find_by_username(params[:id])		
+		@recipes = table_items(@user.recipes)
+		@title = @user.username + "'s Recipes"
+		respond_to do |format|
+			format.html { render :index }
+			format.js   { render :table }
 		end
 	end
 
@@ -82,5 +94,4 @@ class RecipesController < ApplicationController
 		rescue
 			redirect_to root_path
 		end
-		
 end

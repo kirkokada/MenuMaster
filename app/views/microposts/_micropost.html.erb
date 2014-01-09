@@ -1,4 +1,4 @@
-<li>
+<li id="micropost_<%= micropost.id %>">
 	<span class="username"><%= micropost.user.username %></span>
 	<span class="content"><%= wrap(micropost.content) %></span>
 	<span class="timestamp"><%= time_ago_in_words(micropost.created_at) %> ago</span>

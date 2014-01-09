@@ -30,7 +30,7 @@ describe "AuthenticationPages" do
       
   		before { sign_in user }
 
-  		it { should have_title user.username }
+  		it { should have_title full_title '' }
       it { should_not have_link 'Users',       href: users_path }
   		it { should have_link 'Profile',     href: user_path(user) }
       it { should have_link 'Settings',    href: edit_user_path(user) }
@@ -82,14 +82,6 @@ describe "AuthenticationPages" do
 
     describe "for non-signed in users" do
 
-      shared_examples_for "visiting a protected page" do
-        it { should have_title 'Sign in' }
-      end
-
-      shared_examples_for "submitting to a protected action" do
-        specify { expect(response).to redirect_to signin_path }
-      end
-
       describe "visiting a protected page" do
         
         before { visit edit_user_path(user) }
@@ -114,7 +106,7 @@ describe "AuthenticationPages" do
             end
 
             it "should render the default page" do
-              expect(page).to have_title user.username
+              expect(page).to have_title full_title ''
             end
           end
         end
@@ -200,10 +192,6 @@ describe "AuthenticationPages" do
 
     describe "for wrong user" do
       let(:wrong_user) { FactoryGirl.create :user }
-
-      shared_examples_for "submitting to a protected action as wrong user" do
-        specify { expect(response).to redirect_to root_path }
-      end
 
       describe "visiting Users#edit page" do
         before do

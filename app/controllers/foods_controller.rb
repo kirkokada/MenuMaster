@@ -25,8 +25,7 @@ class FoodsController < ApplicationController
 	end
 
 	def index
-		@foods = Food.search(params[:search]).order(order_args(Food)).paginate(page: params[:page], 
-																										                       per_page: 30)
+		@foods = table_items(Food)
 		respond_to do |format|
 			format.html
 			format.js

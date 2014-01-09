@@ -34,11 +34,25 @@ describe "MicropostPages" do
 		before { FactoryGirl.create :micropost, user: user }
 		
 		describe "as correct user" do
-			before { visit root_path }
+			before { visit newsfeed_path }
 
 			it "should delete the micropost" do
 				expect { click_link "delete" }.to change(Micropost, :count).by(-1)
 			end
+		end
+	end
+
+	describe "newsfeed" do
+		before do 
+			2.times { FactoryGirl.create :micropost, user: user }
+			sign_in user
+			click_link "Newsfeed"
+		end
+
+		it "should render the user's feed" do
+		  user.feed.each do |item|
+		    expect(page).to have_selector("li##{item.id}", text: item.content)
+		  end
 		end
 	end
 end

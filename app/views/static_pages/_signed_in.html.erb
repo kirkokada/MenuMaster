@@ -9,9 +9,6 @@
 		<section>
 			<%= render 'shared/micropost_form' %>
 		</section>
-		<section>
-			<%= render 'shared/feed' %>
-		</section>
 	</aside>
 	<div class="span8" id="home_menu">
 		<div class="home_menu_item">
@@ -19,6 +16,9 @@
 		</div>
 		<div class="home_menu_item">
 			<h1>Macro Tracker</h1>
+		</div>
+		<div class="home_menu_item">
+			<h1><%= link_to "Newsfeed", newsfeed_path %></h1>
 		</div>
 	</div>
 </div>

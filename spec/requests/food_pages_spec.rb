@@ -76,8 +76,8 @@ describe "FoodPages" do
 
   		describe "as a non-admin user" do
   			
-		  	let!(:food_1) { FactoryGirl.create :food }
-		  	let!(:food_2) { FactoryGirl.create :food }
+		  	let!(:food_1) { FactoryGirl.create :food, name: "a Food" }
+		  	let!(:food_2) { FactoryGirl.create :food, name: "Z Food" }
 
 				before do
 					sign_in user
@@ -95,23 +95,11 @@ describe "FoodPages" do
 			  	it { should have_content food_2.name }
 
 					it_should_behave_like "a sortable table" do
+						def create_object
+							FactoryGirl.create :food
+						end
 						let(:object_1) { food_1 }
 						let(:object_2) { food_2 }
-					end
-				end
-				
-				describe "pagination" do
-					before(:all) do
-						31.times { FactoryGirl.create :food }
-					end
-					after(:all) { Food.delete_all }
-
-					it { should have_selector ".pagination" }
-
-					it "should list all foods" do
-						Food.paginate(page: 1) do |food|
-							expect(page).to have_selector "div#food_#{food.id}"
-						end
 					end
 				end
   		end

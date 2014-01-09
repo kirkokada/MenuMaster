@@ -1,15 +1,17 @@
-<% provide :title, "My recipes" %>
+<% provide :title, @title %>
 
 <div class="row">
 	<div class="span8 offset2">
-		<h1>My Recipes</h1>
-		<%= link_to "+ New recipe", new_recipe_path, class: "pull-right" %>
-		<%= form_tag recipes_path, method: "get", id: "recipes_search", class: "search" do %>
+		<h1><%= @title %></h1>
+		<% if params[:action] == "index" %>
+			<%= link_to "+ New recipe", new_recipe_path, class: "pull-right" %>
+		<% end %>
+		<%= form_tag({ controller: params[:controller], action: params[:action] }, 
+				             { method: "get", id: "recipes_search", class: "search" }) do %>
 			<%= render 'shared/search_form' %>
 			<div class="table" id="recipes">
 				<%= render 'recipes_table' %>
 			</div>
 		<% end %>
-		<%= will_paginate @recipes %>
 	</div>
 </div>

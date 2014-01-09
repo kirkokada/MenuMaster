@@ -3,5 +3,6 @@
 <%= render "shared/table_headers", object_model: Recipe, show_amount: false %>
 <% if @recipes.any? %>
 	<%= render @recipes %>
+	<%= will_paginate @recipes %>
 <% end %>
 

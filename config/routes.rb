@@ -4,9 +4,16 @@ MenuMaster::Application.routes.draw do
     member do
       get :following, :followers
     end
+    member do
+      resources :microposts, only: [] do
+        collection do
+          get :activity
+        end
+      end
+    end
   end
   resources :sessions,      only: [:new, :create, :destroy]
-  resources :microposts,    only: [:create, :destroy]
+  resources :microposts,    only: [:create, :destroy, :index] 
   resources :relationships, only: [:create, :destroy]
   resources :foods
   resources :food_imports, only: [:new, :create]
@@ -28,7 +35,12 @@ MenuMaster::Application.routes.draw do
 
   get "signin/"  => 'sessions#new'
   delete "signout/" => 'sessions#destroy'
+
+  get "newsfeed/" => 'microposts#index'
   
+  get 'users/:id/microposts' => 'microposts#user', as: :user_microposts
+  get 'users/:id/recipes'    => 'recipes#user',    as: :user_recipes
+
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

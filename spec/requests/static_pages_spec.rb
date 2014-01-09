@@ -37,21 +37,14 @@ describe "StaticPages" do
     describe "for signed in users" do
       let(:user) { FactoryGirl.create(:user) }
       before do
-        2.times { FactoryGirl.create(:micropost, user: user) }
         sign_in user
         visit root_path
       end
 
-      it "should render the user's feed" do
-        user.feed.each do |item|
-          expect(page).to have_selector("li##{item.id}", text: item.content)
-        end
-      end
-
       describe "links" do
         
-        it { should have_link "Recipes", href: home_recipe_nav_path }
-
+        it { should have_link "Recipes",  href: home_recipe_nav_path }
+        it { should have_link "Newsfeed", href: newsfeed_path }
       end
 
       describe "recipes links" do

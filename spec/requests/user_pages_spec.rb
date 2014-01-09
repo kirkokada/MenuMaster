@@ -64,13 +64,20 @@ describe "UserPages" do
 		let(:user) { FactoryGirl.create(:user) }
 		let!(:m1) { FactoryGirl.create :micropost, user: user }
 		let!(:m2) { FactoryGirl.create :micropost, user: user }
+		let!(:r1) { FactoryGirl.create :recipe,    user: user, name: "A recipe" }
+		let!(:r2) { FactoryGirl.create :recipe,    user: user, name: "z recipe" }
 
 		before { visit user_path(user) }
 
 		it { should have_title user.username }
 		it { should have_content user.username }
+		it { should have_link "Activity", href: user_microposts_path(user) }
+		it { should have_link "Recipes",  href: user_recipes_path(user) }
 
-		describe "microposts" do
+		describe "Activity", js: true do
+
+			before { click_link "Activity" }
+
 			it { should have_content m1.content }
 			it { should have_content m2.content }
 			it { should have_content user.microposts.count }
@@ -78,10 +85,35 @@ describe "UserPages" do
 			it { should_not have_link "delete", href: micropost_path(m2) }
 
 			describe "after signing in" do
-				before { sign_in user }
+				before do 
+					sign_in user
+					visit user_path(user)
+					click_link "Activity"
+				end
 
-				it { should have_link "delete", href: micropost_path(m1) }
-				it { should have_link "delete", href: micropost_path(m2) }
+				it "should have delete links" do 
+					page.should have_link "delete", href: micropost_path(m1) 
+				  page.should have_link "delete", href: micropost_path(m2) 
+				end
+			end
+
+		end
+
+		describe "Recipes" do
+			
+			before { click_link "Recipes" }
+
+			it { should have_title full_title "#{user.username}'s Recipes" }
+			it { should_not have_link "+ New recipe" }
+
+			it_should_behave_like "a sortable table" do
+
+				def create_object
+          FactoryGirl.create(:recipe, user: user)
+        end
+
+				let(:object_1) { r1 }
+				let(:object_2) { r2 }
 			end
 		end
 
