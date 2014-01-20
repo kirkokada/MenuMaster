@@ -1,3 +1,13 @@
-	<%= label_tag :search, nil, class: "hidden" %>
-	<%= text_field_tag :search, params[:search], class: "input-medium search-query" %>
-	<%= submit_tag "Search", name: nil, class: "btn" %>
+	<div class="row-fluid">
+		<%= label_tag :search, nil, class: "sr-only" %>
+		<span class="col-xs-6">
+			<%= text_field_tag :search, params[:search], class: "form-control" %>
+		</span>
+		<span class="col-xs-2">
+			<%= button_tag(type: 'submit', class: "btn", name: nil) do %>
+			  <span class="glyphicon glyphicon-search">
+			  	<span class="sr-only">Search</span>
+			  </span> 
+			<% end %>
+		</span>
+	</div>

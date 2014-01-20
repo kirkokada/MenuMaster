@@ -7,7 +7,7 @@
 			<%= link_to "+ New recipe", new_recipe_path, class: "pull-right" %>
 		<% end %>
 		<%= form_tag({ controller: params[:controller], action: params[:action] }, 
-				             { method: "get", id: "recipes_search", class: "search" }) do %>
+				             { method: "get", id: "recipes_search", class: "search_form" }) do %>
 			<%= render 'shared/search_form' %>
 			<div class="table" id="recipes">
 				<%= render 'recipes_table' %>

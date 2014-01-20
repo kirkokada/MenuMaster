@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '2.0.0'
 
 gem 'rails', '4.0.0'
-gem 'bootstrap-sass', '2.3.1.0'
+gem 'bootstrap-sass'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'faker', '1.1.2'
 gem 'will_paginate'
@@ -10,17 +10,22 @@ gem 'bootstrap-will_paginate'
 gem 'roo'
 gem 'friendly_id', github: 'norman/friendly_id', branch: '5.0.0.rc2'
 gem 'pg'
+gem 'sass-rails', '~> 4.0.0.rc1'
+gem 'uglifier', '2.1.1'
+gem 'coffee-rails', '4.0.0'
+gem 'jquery-rails', '2.2.1'
+gem 'turbolinks', '1.1.1'
+gem 'jbuilder', '1.0.2'
 
 group :development, :test do
   gem 'rspec-rails'
-  gem 'guard-rspec', '2.5.0'
-  gem 'spork-rails', github: 'railstutorial/spork-rails'
-  gem 'guard-spork', '1.5.0'
+  # gem 'guard-rspec', '2.5.0'
+  # gem 'spork-rails', github: 'railstutorial/spork-rails'
+  # gem 'guard-spork', '1.5.0'
   gem 'childprocess', '0.3.6'
 end
 
 group :test do
-  gem 'selenium-webdriver'
   gem 'capybara-webkit'
   gem 'rubyzip', '< 1.0.0'
   gem 'capybara'
@@ -42,12 +47,6 @@ group :test do
   # gem 'win32console', '1.3.2'
 end
 
-gem 'sass-rails', '4.0.0.rc1'
-gem 'uglifier', '2.1.1'
-gem 'coffee-rails', '4.0.0'
-gem 'jquery-rails', '2.2.1'
-gem 'turbolinks', '1.1.1'
-gem 'jbuilder', '1.0.2'
 
 group :doc do
   gem 'sdoc', '0.3.20', require: false
