@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id              :integer          not null, primary key
+#  username        :string(255)
+#  email           :string(255)
+#  created_at      :datetime
+#  updated_at      :datetime
+#  password_digest :string(255)
+#  remember_token  :string(255)
+#  admin           :boolean          default(FALSE)
+#
+
 require 'spec_helper'
 
 describe User do
@@ -12,6 +26,7 @@ describe User do
 	it { should respond_to :followers }
 	it { should respond_to :following? }
 	it { should respond_to :follow! }
+	it { should respond_to :meals }
 	it { should respond_to :microposts }
 	it { should respond_to :password_digest }
 	it { should respond_to :password }

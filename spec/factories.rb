@@ -38,4 +38,9 @@ FactoryGirl.define do
 		recipe
 		amount 100
 	end
+
+	factory :meal	do
+		user
+		eaten_at DateTime.now
+	end
 end
