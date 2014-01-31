@@ -34,9 +34,6 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     addressable (2.3.5)
-    annotate (2.6.1)
-      activerecord (>= 2.3.0)
-      rake (>= 0.8.7)
     arel (4.0.1)
     atomic (1.1.14)
     bcrypt-ruby (3.0.1)
@@ -135,7 +132,7 @@ GEM
       rspec-mocks (~> 2.14.0)
     ruby-ole (1.2.11.7)
     rubyzip (0.9.9)
-    sass (3.2.14)
+    sass (3.2.13)
     sass-rails (4.0.0)
       railties (>= 4.0.0.beta, < 5.0)
       sass (>= 3.1.10)
@@ -175,7 +172,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  annotate (>= 2.6.0)
   bcrypt-ruby (= 3.0.1)
   bootstrap-sass
   bootstrap-will_paginate

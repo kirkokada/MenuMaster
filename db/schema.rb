@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140131012222) do
+ActiveRecord::Schema.define(version: 20131126081914) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,15 +58,6 @@ ActiveRecord::Schema.define(version: 20140131012222) do
   add_index "ingredients", ["food_id"], name: "index_ingredients_on_food_id", using: :btree
   add_index "ingredients", ["recipe_id"], name: "index_ingredients_on_recipe_id", using: :btree
 
-  create_table "meals", force: true do |t|
-    t.date    "eaten_at"
-    t.integer "user_id"
-  end
-
-  add_index "meals", ["eaten_at", "user_id"], name: "index_meals_on_eaten_at_and_user_id", unique: true, using: :btree
-  add_index "meals", ["eaten_at"], name: "index_meals_on_eaten_at", using: :btree
-  add_index "meals", ["user_id"], name: "index_meals_on_user_id", using: :btree
-
   create_table "microposts", force: true do |t|
     t.string   "content"
     t.integer  "user_id"
@@ -103,17 +94,6 @@ ActiveRecord::Schema.define(version: 20140131012222) do
   add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id", using: :btree
   add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
   add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
-
-  create_table "selected_recipes", force: true do |t|
-    t.integer  "meal_id"
-    t.integer  "recipe_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "selected_recipes", ["meal_id", "recipe_id"], name: "index_selected_recipes_on_meal_id_and_recipe_id", unique: true, using: :btree
-  add_index "selected_recipes", ["meal_id"], name: "index_selected_recipes_on_meal_id", using: :btree
-  add_index "selected_recipes", ["recipe_id"], name: "index_selected_recipes_on_recipe_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "username"

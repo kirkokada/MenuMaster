@@ -11,7 +11,6 @@ MenuMaster::Application.routes.draw do
         end
       end
     end
-    resources :meals
   end
   resources :sessions,      only: [:new, :create, :destroy]
   resources :microposts,    only: [:create, :destroy, :index] 

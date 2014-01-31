@@ -1,17 +1,3 @@
-# == Schema Information
-#
-# Table name: users
-#
-#  id              :integer          not null, primary key
-#  username        :string(255)
-#  email           :string(255)
-#  created_at      :datetime
-#  updated_at      :datetime
-#  password_digest :string(255)
-#  remember_token  :string(255)
-#  admin           :boolean          default(FALSE)
-#
-
 class User < ActiveRecord::Base
 	VALID_USERNAME_REGEX = /\A[\w]+\z/i 
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
@@ -32,7 +18,6 @@ class User < ActiveRecord::Base
 																	 class_name: "Relationship", 
 																	 dependent: :destroy
 	has_many :relationships, foreign_key: "follower_id", dependent: :destroy
-	has_many :meals, dependent: :destroy
 
 	before_save do
 		self.email = email.downcase

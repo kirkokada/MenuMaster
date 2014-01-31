@@ -1,20 +1,3 @@
-# == Schema Information
-#
-# Table name: ingredients
-#
-#  id         :integer          not null, primary key
-#  food_id    :integer
-#  recipe_id  :integer
-#  amount     :integer
-#  created_at :datetime
-#  updated_at :datetime
-#  calories   :float
-#  protein    :float
-#  carbs      :float
-#  fat        :float
-#  name       :string(255)
-#
-
 require 'spec_helper'
 
 describe Ingredient do

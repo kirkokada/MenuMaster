@@ -132,12 +132,6 @@ input, textarea, select, .uneditable-input {
   @include box_sizing;
 }
 
-#new_meal {
-  select, input {
-    width: auto;
-  }
-}
-
 input {
   height: auto !important;
 }

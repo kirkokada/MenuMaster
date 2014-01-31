@@ -1,17 +1,3 @@
-# == Schema Information
-#
-# Table name: foods
-#
-#  id         :integer          not null, primary key
-#  name       :string(255)
-#  calories   :integer
-#  protein    :integer
-#  fat        :integer
-#  carbs      :integer
-#  created_at :datetime
-#  updated_at :datetime
-#
-
 class Food < ActiveRecord::Base
 	include Search
 

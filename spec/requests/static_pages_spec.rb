@@ -44,7 +44,6 @@ describe "StaticPages" do
       describe "links" do
         
         it { should have_link "Recipes",  href: home_recipe_nav_path }
-        it { should have_link "Track", href: new_user_meal_path(user) }
         it { should have_link "Newsfeed", href: newsfeed_path }
       end
 
