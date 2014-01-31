@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131126081914) do
+ActiveRecord::Schema.define(version: 20140131061749) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,12 @@ ActiveRecord::Schema.define(version: 20131126081914) do
   add_index "ingredients", ["food_id", "recipe_id"], name: "index_ingredients_on_food_id_and_recipe_id", unique: true, using: :btree
   add_index "ingredients", ["food_id"], name: "index_ingredients_on_food_id", using: :btree
   add_index "ingredients", ["recipe_id"], name: "index_ingredients_on_recipe_id", using: :btree
+
+  create_table "meals", force: true do |t|
+    t.date    "eaten_at"
+    t.integer "recipe_id"
+    t.integer "user_id"
+  end
 
   create_table "microposts", force: true do |t|
     t.string   "content"
