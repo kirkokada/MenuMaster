@@ -23,4 +23,8 @@ class StaticPagesController < ApplicationController
       format.html
     end
   end
+
+  def meal_nav
+    
+  end
 end

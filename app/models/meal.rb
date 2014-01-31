@@ -16,6 +16,7 @@ class Meal < ActiveRecord::Base
 
 	validates :user_id, presence: true
 	validates :eaten_at, presence: true
+	validates_uniqueness_of :eaten_at, scope: :user_id
 
 	def select!(recipe)
 		self.selected_recipes.create!(recipe_id: recipe.id)

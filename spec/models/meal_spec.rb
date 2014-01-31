@@ -11,7 +11,7 @@ require 'spec_helper'
 
 describe Meal do
 	let(:user) { FactoryGirl.create :user }
-	let(:meal) { user.meals.create(eaten_at: DateTime.now) }
+	let(:meal) { user.meals.build(eaten_at: DateTime.now) }
 	subject { meal }
 
 	it { should respond_to :eaten_at }
@@ -46,6 +46,13 @@ describe Meal do
 
 	describe "when eaten_at isn't present" do
 		before { meal.eaten_at = nil }
+		it { should_not be_valid }
+	end
+
+	describe "when eaten_at isn't unique for a user" do
+		let(:meal_with_same_date) { meal.dup }
+		before { meal_with_same_date.save }
+
 		it { should_not be_valid }
 	end
 end
