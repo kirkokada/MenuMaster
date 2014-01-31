@@ -3,14 +3,5 @@
 <div class="row-fluid">
 	<div class="col-md-8 col-md-offset-2">
 		<h1>Record Meal</h1>
-		<div class="row">
-			<div class="col-xs-8 col-xs-offset-2">
-				<%= form_for [current_user, @meal] do |f| %>
-					<%= f.label :eaten_at %>
-					<%= f.datetime_select :eaten_at, discard_year: true, :ampm => true, :minute_step => 15 %>
-					<%= f.submit "Save", class: "btn btn-xs" %>
-				<% end %>
-			</div>
-		</div>
 	</div>
 </div>
