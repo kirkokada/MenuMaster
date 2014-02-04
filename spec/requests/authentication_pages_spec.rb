@@ -188,6 +188,13 @@ describe "AuthenticationPages" do
           it_should_behave_like "submitting to a protected action"
         end
       end
+
+      describe "in the Meals controller" do
+        describe "submitting to the create action" do
+          before { post user_meals_path(user) }
+          it_should_behave_like "submitting to a protected action"
+        end
+      end
     end
 
     describe "for wrong user" do
@@ -231,6 +238,15 @@ describe "AuthenticationPages" do
 
         it { should have_title full_title('') }
         it { should_not have_title full_title(recipe.name) }
+      end
+
+      describe "visiting the Meals#new page" do
+        before do
+          sign_in user
+          visit new_user_meal_path(wrong_user)
+        end
+
+        it { should_not have_title full_title('Record Meal') }
       end
     end
 

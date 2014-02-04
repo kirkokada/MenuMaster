@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  include UsersHelper
 
   before_action :signed_in_user, 
                 only: [:edit, :update, :index, :destroy, :following, :followers]

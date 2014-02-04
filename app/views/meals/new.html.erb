@@ -1,0 +1,18 @@
+<% provide :title, "Record Meal" %>
+
+<div class="row">
+	<div class="col-md-8 col-md-offset-2">
+		<h1>Record Meal</h1>
+		<%= form_for [current_user, @meal] do |f| %>
+			<%= render 'shared/error_messages', object: f.object %>
+			<%= f.label :recipe_id, "Recipe" %>
+			<%= f.collection_select(:recipe_id, 
+			                        current_user.recipes, 
+			                        :id, 
+			                        :name, 
+			                        { include_blank: "Select a recipe" }) %>
+			<%= f.hidden_field :eaten_at %>
+			<%= f.submit "Record", class: "btn" %>
+		<% end %>
+	</div>
+</div>
